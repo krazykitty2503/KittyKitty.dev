@@ -1,0 +1,26 @@
+/* Self-hosted fonts (SIL OFL) — see assets/fonts/LICENSE-*.txt
+ * Sourced from npm: @fontsource-variable/orbitron@5.3.0,
+ * @fontsource-variable/inter@5.3.0, @fontsource/share-tech-mono@5.3.0 (latin subset).
+ * The design system's font-src 'self' rule means no third-party font CDN. */
+
+@font-face {
+  font-family: "Orbitron";
+  src: url("../fonts/orbitron-latin-wght-normal.woff2") format("woff2");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/inter-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Share Tech Mono";
+  src: url("../fonts/share-tech-mono-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

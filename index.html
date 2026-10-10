@@ -3,24 +3,30 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>KITTYS//ECOSYSTEM — KrazyKitty's projects, home lab &amp; roadmap</title>
-  <meta name="description" content="KITTYS//ECOSYSTEM is the portfolio hub of KrazyKitty: a Debian home lab, Discord and Telegram tooling, a from-scratch language model, a Linux and cyber lab, and a planned Linux distro — every project with an honest, dated status label.">
-  <meta name="theme-color" content="#0a0610">
+  <title>KRAZYKITTY // ECOSYSTEM — Development Universe</title>
+  <meta name="description" content="KrazyKitty's development universe: systems, security, infrastructure and AI projects, with clear lifecycle and priority labels.">
+  <meta name="theme-color" content="#090611">
   <meta name="color-scheme" content="dark">
+  <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://krazykitty.dev/">
 
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="KITTYS//ECOSYSTEM">
-  <meta property="og:title" content="KITTYS//ECOSYSTEM — KrazyKitty">
-  <meta property="og:description" content="Projects running, in development and planned: home lab, Discord and Telegram tooling, a from-scratch LLM, a Linux and cyber lab, a future Linux distro.">
+  <meta property="og:site_name" content="KRAZYKITTY // ECOSYSTEM">
+  <meta property="og:title" content="KRAZYKITTY // ECOSYSTEM">
+  <meta property="og:description" content="Development Universe — systems, security, infrastructure and AI.">
   <meta property="og:url" content="https://krazykitty.dev/">
-  <meta property="og:image" content="https://krazykitty.dev/assets/img/og-card.jpg">
-  <meta property="og:image:alt" content="KrazyKitty neko avatar at a violet neon desk with terminal windows">
+  <meta property="og:image" content="https://krazykitty.dev/assets/img/og-ecosystem.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="KRAZYKITTY // ECOSYSTEM — Development Universe, shown in a violet cyber-neon city and systems interface.">
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
   <link rel="preload" href="assets/fonts/orbitron-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" as="image" href="assets/img/hero-ecosystem-1280.webp"
+        imagesrcset="assets/img/hero-ecosystem-1280.webp 1280w, assets/img/hero-ecosystem-2172.webp 2172w"
+        imagesizes="100vw" type="image/webp" fetchpriority="high">
   <link rel="stylesheet" href="assets/css/fonts.css">
   <link rel="stylesheet" href="assets/css/kk-tokens.css">
   <link rel="stylesheet" href="assets/css/site.css">
@@ -29,662 +35,526 @@
 
 <body>
   <a class="kk-skip" href="#main">Skip to content</a>
-  <canvas id="particles" aria-hidden="true"></canvas>
 
-  <!-- ============ HEADER ============ -->
   <header class="site-header">
     <div class="container site-header-inner">
-      <a class="brand" href="#top" aria-label="KITTYS//ECOSYSTEM — back to top">
-        <img src="assets/img/favicon.svg" alt="" width="28" height="28">
-        <span>KITTYS<span class="sl">//</span>ECOSYSTEM</span>
+      <a class="brand" href="#top" aria-label="KRAZYKITTY // ECOSYSTEM — back to top">
+        <img src="assets/img/favicon.svg" alt="" width="30" height="30">
+        <span class="brand-name">KRAZYKITTY <span class="slash">//</span> ECOSYSTEM</span>
       </a>
-      <nav class="nav" aria-label="Sections">
-        <a href="#map">MAP</a>
+
+      <button class="icon-btn nav-toggle" id="nav-toggle" type="button"
+              aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle-lines" aria-hidden="true"></span>
+        <span class="kk-visually-hidden">Open navigation</span>
+      </button>
+
+      <nav class="nav" id="site-nav" aria-label="Primary">
+        <a href="#focus">FOCUS</a>
+        <a href="#ecosystem">ECOSYSTEM</a>
         <a href="#projects">PROJECTS</a>
+        <a href="#universe">UNIVERSE</a>
         <a href="#roadmap">ROADMAP</a>
-        <a href="#learning">LEARNING</a>
-        <a href="#principles">PRINCIPLES</a>
-        <a href="#contact">CONTACT</a>
+        <a href="#about">ABOUT</a>
       </nav>
-      <button class="chip-btn fx-toggle" id="fx-toggle" type="button" aria-pressed="true">EFFECTS</button>
+
+      <button class="chip-btn fx-toggle" id="fx-toggle" type="button" aria-pressed="true">
+        EFFECTS
+      </button>
     </div>
   </header>
 
   <main id="main" tabindex="-1">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <picture class="hero-media" aria-hidden="true">
+        <source srcset="assets/img/hero-ecosystem-1280.webp 1280w, assets/img/hero-ecosystem-2172.webp 2172w"
+                sizes="100vw" type="image/webp">
+        <img src="assets/img/hero-ecosystem-1280.webp" alt="" width="1280" height="427"
+             fetchpriority="high" decoding="async">
+      </picture>
+      <div class="hero-shade" aria-hidden="true"></div>
 
-    <!-- ============ HERO ============ -->
-    <section class="hero" id="top">
-      <div class="container hero-grid">
-        <div>
-          <p class="badge"><span class="badge-dot" aria-hidden="true"></span>KRAZYKITTY.DEV // PORTFOLIO HUB</p>
+      <div class="container hero-content">
+        <p class="badge"><span aria-hidden="true"></span>KRAZYKITTY.DEV // DEVELOPMENT UNIVERSE</p>
+        <h1 class="hero-title" id="hero-title">
+          <span>KRAZYKITTY <span class="slash">//</span></span>
+          <span class="gradient-text">ECOSYSTEM</span>
+        </h1>
+        <p class="hero-line">SYSTEMS <span>•</span> SECURITY <span>•</span> INFRASTRUCTURE <span>•</span> AI</p>
+        <p class="hero-description">
+          I’m <strong>Kitty</strong> — KrazyKitty — a Computer Science student, Python developer,
+          cybersecurity enthusiast and AI/LLM researcher. This is the public map of the systems
+          I operate, the projects I’m building, and the ideas I’m deliberately keeping as ideas.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#projects">EXPLORE PROJECTS</a>
+          <a class="btn" href="#focus">VIEW CURRENT FOCUS</a>
+        </div>
+        <ul class="hero-meta" aria-label="Site snapshot">
+          <li><span>SNAPSHOT</span><time datetime="2026-10-10">10 OCT 2026</time></li>
+          <li><span>FORMAT</span>STATIC • NO TRACKING</li>
+          <li><span>STATUS</span>EVIDENCE-LABELLED</li>
+        </ul>
+      </div>
+    </section>
 
-          <h1 class="hero-title">
-            <span>KITTYS<span class="sl">//</span></span>
-            <span class="grad">ECOSYSTEM</span>
-          </h1>
-
-          <p class="hero-sub">CYBER • CODE • INFRASTRUCTURE • AI</p>
-
-          <p class="hero-desc">
-            I'm <strong>Kitty</strong> (KrazyKitty): a developer and cybersecurity student who learns by
-            building real systems. This hub maps everything in my lab — what I <strong>run</strong>, what I'm
-            <strong>building</strong>, and what is still a <strong>plan</strong> — with a dated status label on every
-            project so nothing is dressed up as finished.
+    <section class="section section-focus" id="focus" data-reveal>
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">// 00 CURRENT FOCUS</p>
+            <h2 class="section-title">Priority is separate from <em>lifecycle</em></h2>
+          </div>
+          <p class="section-intro">
+            A project can be real without being the current priority. This public stack shows where attention
+            is aimed without turning planning windows into delivery promises.
           </p>
-
-          <div class="actions">
-            <a class="btn btn-primary" href="#projects">EXPLORE PROJECTS</a>
-            <a class="btn" href="#roadmap">SEE THE ROADMAP</a>
-          </div>
         </div>
 
-        <div class="hero-side">
-          <figure class="avatar">
-            <img src="assets/img/avatar.webp" width="640" height="640"
-                 alt="Anime neko avatar of KrazyKitty: a red-haired girl with cat ears and round glasses holding a handheld console, with a glowing pixel black cat in front of her.">
-            <figcaption>// KRAZYKITTY — neko × terminal</figcaption>
-          </figure>
-
-          <div class="terminal" role="group" aria-label="Decorative boot sequence">
-            <div class="terminal-bar">
-              <span class="terminal-dot" aria-hidden="true"></span>
-              <span class="terminal-dot" aria-hidden="true"></span>
-              <span class="terminal-dot" aria-hidden="true"></span>
-              <span>ecosystem://decorative</span>
-            </div>
-            <div class="terminal-body">
-              <span class="terminal-line" data-boot><span class="t-prompt">kitty@krazykitty</span>:~$ ./ecosystem --map</span>
-              <span class="terminal-line" data-boot>&gt; nodes: workstation, home-node, surfaces</span>
-              <span class="terminal-line" data-boot>&gt; status labels: <span class="t-val">dated, evidence-based</span></span>
-              <span class="terminal-line" data-boot>&gt; live telemetry: <span class="t-val">NOT MONITORED</span></span>
-              <span class="terminal-line" data-boot><span class="t-prompt">kitty@krazykitty</span>:~$ <span class="t-cursor" aria-hidden="true">_</span></span>
-            </div>
-          </div>
+        <div class="priority-stack">
+          <article class="priority-tier tier-p0">
+            <div class="tier-label"><span>P0</span><strong>NOW / HARDEN</strong></div>
+            <ul class="tier-items">
+              <li>KRAZY<span class="slash">//</span>CORE</li>
+              <li>KERNEL<span class="slash">//</span>KITTY</li>
+              <li>KERNEL<span class="slash">//</span>SENTINEL</li>
+              <li>Computer Science study</li>
+            </ul>
+          </article>
+          <article class="priority-tier tier-p1">
+            <div class="tier-label"><span>P1</span><strong>ACTIVE DEVELOPMENT</strong></div>
+            <ul class="tier-items">
+              <li>KittyLM</li>
+              <li>SOUL<span class="slash">//</span>CORE</li>
+              <li>KITTY<span class="slash">//</span>RELAY</li>
+              <li>KITTY<span class="slash">//</span>LINUX</li>
+              <li>KITTY<span class="slash">//</span>NEXUS</li>
+              <li>KRAZY<span class="slash">//</span>FILEFLOW</li>
+            </ul>
+          </article>
+          <article class="priority-tier tier-p2">
+            <div class="tier-label"><span>P2</span><strong>MAINTAIN / NEXT</strong></div>
+            <ul class="tier-items">
+              <li>krazykitty.dev</li>
+              <li>KITTY<span class="slash">//</span>CONTROL</li>
+              <li>Kitty’s Info / Tech KB</li>
+              <li>ComfyUI / Wan workflows</li>
+              <li>LOVE<span class="slash">//</span>TERMINAL archive</li>
+            </ul>
+          </article>
+          <article class="priority-tier tier-p3">
+            <div class="tier-label"><span>P3</span><strong>IDEA VAULT</strong></div>
+            <ul class="tier-items">
+              <li>SOUL<span class="slash">//</span>NEXUS</li>
+              <li>AETHER<span class="slash">//</span>RUST research</li>
+              <li>Creative and game concepts</li>
+            </ul>
+          </article>
         </div>
-      </div>
-    </section>
-
-    <!-- ============ MAP ============ -->
-    <section class="section" id="map">
-      <div class="container">
-        <p class="eyebrow">// 00 ECOSYSTEM MAP</p>
-        <h2 class="section-title">How the pieces <em>fit together</em></h2>
-        <p class="section-intro">
-          A Windows workstation does the interactive and GPU-heavy work. An always-on Debian home server hosts,
-          monitors and automates. Together they feed the places people actually see my work.
-        </p>
-
-        <div class="map">
-          <div class="map-col">
-            <h3>WORKSTATION</h3>
-            <p class="map-sub">Windows 11 · Ryzen 5 · RX 9060 XT 16&nbsp;GB</p>
-            <ul class="map-list" role="list">
-              <li>KittyLM research &amp; training</li>
-              <li>KRAZY<span class="sl">//</span>CORE plugin development</li>
-              <li>KRAZY<span class="sl">//</span>NEXUS &amp; KITTY<span class="sl">//</span>RELAY development</li>
-              <li>Kittys AI (local agent)</li>
-            </ul>
-          </div>
-          <div class="map-col">
-            <h3>DEBIAN-KITTY</h3>
-            <p class="map-sub">Home server · always-on</p>
-            <ul class="map-list" role="list">
-              <li>Docker services, private DNS, reverse proxy</li>
-              <li>KERNEL<span class="sl">//</span>KITTY monitoring &amp; control plane</li>
-              <li>Discord bots &amp; the RELAY frontend</li>
-              <li>Future: builds, backups, storage, labs</li>
-            </ul>
-          </div>
-          <div class="map-col">
-            <h3>SURFACES</h3>
-            <p class="map-sub">Where it shows up</p>
-            <ul class="map-list" role="list">
-              <li>Discord &amp; Equicord</li>
-              <li>Telegram — KITTY<span class="sl">//</span>RELAY</li>
-              <li>krazykitty.dev (you are here)</li>
-              <li>Private dashboards &amp; consoles</li>
-            </ul>
-          </div>
-        </div>
-        <p class="map-caption">// conceptual map of how the pieces relate — not a live network topology</p>
-      </div>
-    </section>
-
-    <!-- ============ PROJECTS ============ -->
-    <section class="section" id="projects">
-      <div class="container">
-        <p class="eyebrow">// 01 PROJECT REGISTRY</p>
-        <h2 class="section-title">Running, building, <em>planned</em></h2>
-        <p class="section-intro">
-          Status follows evidence, not hope. Each card shows what is verified, what is a demo, and what is only a
-          design. Snapshot reviewed <time datetime="2026-10-09">9 October 2026</time>. Most of my repositories are
-          private for now; KittyLM is public.
-        </p>
-
         <p class="scope-note">
-          STATUS SCOPE: a dated manual review of source repositories and read-only checks — not live telemetry.
-          Health, security, backups and alerts are NOT MONITORED by this page. “Running” is never a security audit.
+          WORK-IN-PROGRESS RULE: no more than three heavy coding tracks at once. “Active development”
+          describes the current portfolio, not simultaneous full-time execution.
         </p>
-
-        <div class="legend" role="list" aria-label="Status legend">
-          <div class="legend-item" role="listitem"><span class="status status-running">RUNNING</span><br>Operating when last checked.</div>
-          <div class="legend-item" role="listitem"><span class="status status-building">BUILDING</span><br>Under active development; not production.</div>
-          <div class="legend-item" role="listitem"><span class="status status-planned">PLANNED</span><br>Designed or proposed. Nothing built yet.</div>
-          <div class="legend-item" role="listitem"><span class="status status-demo">DEMO DATA</span><br>Real interface, simulated values. Never presented as live.</div>
-        </div>
-
-        <div class="filters" role="group" aria-label="Filter projects by status">
-          <button class="chip-btn" type="button" data-filter="all" aria-pressed="true">ALL</button>
-          <button class="chip-btn" type="button" data-filter="running" aria-pressed="false">RUNNING</button>
-          <button class="chip-btn" type="button" data-filter="building" aria-pressed="false">BUILDING</button>
-          <button class="chip-btn" type="button" data-filter="planned" aria-pressed="false">PLANNED</button>
-        </div>
-        <p class="kk-visually-hidden" id="filter-status" role="status"></p>
-
-        <!-- ---------- 01 RUNNING ---------- -->
-        <div class="group" id="group-running">
-          <div class="group-head">
-            <span class="group-num">01 //</span>
-            <h3 class="group-title">RUNNING</h3>
-            <span class="group-note">Operating when last checked</span>
-          </div>
-          <div class="grid">
-
-            <article class="project" data-status="running" id="kernel-kitty">
-              <header class="project-head">
-                <span class="project-code">PRJ-01 // INFRA</span>
-                <span class="project-flags"><span class="status status-running">RUNNING</span></span>
-              </header>
-              <h4 class="project-name">KERNEL<span class="sl">//</span>KITTY</h4>
-              <p class="project-sum">The control, observability and automation plane for my <code>debian-kitty</code> home server: containerised services, private DNS, reverse proxying, secure remote access, monitoring and a read-only-first dashboard.</p>
-              <ul class="tags" role="list" aria-label="Technologies">
-                <li>Debian</li><li>Docker</li><li>FastAPI</li><li>Reverse proxy</li><li>Mesh VPN</li><li>Monitoring</li>
-              </ul>
-              <details class="project-more">
-                <summary>SYSTEM DETAILS</summary>
-                <dl>
-                  <dt>CURRENT STATE</dt>
-                  <dd>A Debian 13 node running a stack of Docker services, with a Milestone-2 dashboard process reporting host telemetry. Confirmed with read-only checks. That is not a full security or health audit.</dd>
-                  <dt>DESIGN RULES</dt>
-                  <dd>Read-only first. “Unknown” is never shown as healthy. A backup isn't “healthy” until a restore has been verified.</dd>
-                  <dt>NEXT GATE</dt>
-                  <dd>Verify the storage migration, add encrypted versioned backups with restore drills, and extend alerting.</dd>
-                </dl>
-              </details>
-              <p class="project-basis">BASIS: read-only checks · 2026-10-09 · SOURCE: private repo</p>
-            </article>
-
-            <article class="project" data-status="running" id="study-bot">
-              <header class="project-head">
-                <span class="project-code">PRJ-02 // DISCORD</span>
-                <span class="project-flags"><span class="status status-running">RUNNING</span></span>
-              </header>
-              <h4 class="project-name">Kitty's Study Bot</h4>
-              <p class="project-sum">A Discord bot, FastAPI management dashboard and orchestrator for a computer-science study server, with declarative, non-destructive server provisioning.</p>
-              <ul class="tags" role="list" aria-label="Technologies">
-                <li>Python</li><li>discord.py</li><li>FastAPI</li><li>OAuth2 / PKCE</li>
-              </ul>
-              <details class="project-more">
-                <summary>SYSTEM DETAILS</summary>
-                <dl>
-                  <dt>CURRENT STATE</dt>
-                  <dd>The repository documents five completed phases and the service process is observed running. Individual commands and server integrations have not been independently re-tested.</dd>
-                  <dt>NEXT GATE</dt>
-                  <dd>A canonical register of every bot: repository, runtime, scope, secrets location and health check.</dd>
-                </dl>
-              </details>
-              <p class="project-basis">BASIS: repository docs + process observed · 2026-10-09 · SOURCE: private repo</p>
-            </article>
-
-          </div>
-        </div>
-
-        <!-- ---------- 02 BUILDING ---------- -->
-        <div class="group" id="group-building">
-          <div class="group-head">
-            <span class="group-num">02 //</span>
-            <h3 class="group-title">BUILDING</h3>
-            <span class="group-note">Active development</span>
-          </div>
-          <div class="grid">
-
-            <article class="project" data-status="building" id="krazy-core">
-              <header class="project-head">
-                <span class="project-code">PRJ-03 // UI ENGINEERING</span>
-                <span class="project-flags"><span class="status status-building">BUILDING</span></span>
-              </header>
-              <h4 class="project-name">KRAZY<span class="sl">//</span>CORE</h4>
-              <p class="project-sum">A modular Equicord/Vencord customisation layer: a family of plugins for themes, palettes, gradients, glow, icons, wallpapers, animation and layout, coordinated by a Theme Studio.</p>
-              <ul class="tags" role="list" aria-label="Technologies">
-                <li>TypeScript</li><li>React</li><li>CSS architecture</li><li>Equicord</li>
-              </ul>
-              <details class="project-more">
-                <summary>SYSTEM DETAILS</summary>
-                <dl>
-                  <dt>CURRENT STATE</dt>
-                  <dd>Nine-plugin family in progress. Theme Studio applies changes through public adapters with snapshot, verify and rollback. Imported profiles are inert data, never executable.</dd>
-                  <dt>NEXT GATE</dt>
-                  <dd>Manual live acceptance testing inside the Discord client, then profiles, Message Designer and developer tools.</dd>
-                </dl>
-              </details>
-              <p class="project-basis">BASIS: repository state · 2026-10-09 · SOURCE: private repo</p>
-            </article>
-
-            <article class="project" data-status="building" id="krazy-nexus">
-              <header class="project-head">
-                <span class="project-code">PRJ-04 // CONTROL PLANE</span>
-                <span class="project-flags"><span class="status status-building">BUILDING</span></span>
-              </header>
-              <h4 class="project-name">KRAZY<span class="sl">//</span>NEXUS</h4>
-              <p class="project-sum">A home-lab control plane and web console, currently private and pre-alpha. Guiding rule: NEXUS must be the safest thing running on the node, not the most powerful.</p>
-              <ul class="tags" role="list" aria-label="Technologies">
-                <li>FastAPI</li><li>React</li><li>TypeScript</li><li>PostgreSQL</li><li>Docker</li>
-              </ul>
-              <details class="project-more">
-                <summary>SYSTEM DETAILS</summary>
-                <dl>
-                  <dt>CURRENT STATE</dt>
-                  <dd>Pre-alpha. Not deployed and not controlling anything. Authentication, sessions, CSRF protection, capability-based authorisation, an append-only audit log and a read-only node API are merged.</dd>
-                  <dt>NEXT GATE</dt>
-                  <dd>Bounded node telemetry; MFA before any mutation; Docker access only through an allow-listed proxy, never a raw socket.</dd>
-                </dl>
-              </details>
-              <p class="project-basis">BASIS: repository state · 2026-10-09 · SOURCE: private repo</p>
-            </article>
-
-            <article class="project" data-status="building" id="kittylm">
-              <header class="project-head">
-                <span class="project-code">PRJ-05 // AI RESEARCH</span>
-                <span class="project-flags"><span class="status status-building">BUILDING</span></span>
-              </header>
-              <h4 class="project-name">KittyLM</h4>
-              <p class="project-sum">A from-scratch language-model research platform: byte-level BPE tokenizer, LLaMA-style dense baseline, resumable training, evaluation and inference. Built to understand and measure the whole stack, not to rival production assistants.</p>
-              <ul class="tags" role="list" aria-label="Technologies">
-                <li>Python</li><li>PyTorch</li><li>ROCm</li><li>Tokenization</li>
-              </ul>
-              <details class="project-more">
-                <summary>SYSTEM DETAILS</summary>
-                <dl>
-                  <dt>CURRENT STATE</dt>
-                  <dd>Milestones A–D are implemented: tokenizer, model and attention benchmark, training with deterministic resume, and evaluation and generation (the README still lists D as in review). E–G have not started. Per the README, no model has been trained and no experiment results exist yet. The research configuration is around 17M parameters.</dd>
-                  <dt>NEXT GATE</dt>
-                  <dd>Milestone E (GPU smoke test), then the data pipeline and formal baseline experiments. Datasets and weights stay out of Git.</dd>
-                </dl>
-              </details>
-              <p class="project-basis">BASIS: public README + repo history · 2026-10-09 · SOURCE: <a href="https://github.com/krazykitty2503/kittylm" rel="noopener">public repo</a> (Apache-2.0)</p>
-            </article>
-
-            <article class="project" data-status="building" id="kitty-relay">
-              <header class="project-head">
-                <span class="project-code">PRJ-06 // TELEGRAM</span>
-                <span class="project-flags">
-                  <span class="status status-building">BUILDING</span>
-                  <span class="status status-demo">DEMO DATA</span>
-                </span>
-              </header>
-              <h4 class="project-name">KITTY<span class="sl">//</span>RELAY</h4>
-              <p class="project-sum">A Telegram Mini App control centre for AI, agents, projects, security views and a small cyber arcade. The Phase 1 frontend is complete and runs on deterministic mock data; the backend does not exist yet.</p>
-              <ul class="tags" role="list" aria-label="Technologies">
-                <li>React 19</li><li>TypeScript</li><li>Vite</li><li>Tailwind CSS</li>
-              </ul>
-              <details class="project-more">
-                <summary>SYSTEM DETAILS</summary>
-                <dl>
-                  <dt>CURRENT STATE</dt>
-                  <dd>Everything the interface shows (AI replies, Docker controls, system metrics) is simulated in demo mode and labelled as such.</dd>
-                  <dt>NEXT GATE</dt>
-                  <dd>A FastAPI backend behind the existing typed API contract, Telegram <code>initData</code> validation and capability-based authorisation.</dd>
-                </dl>
-              </details>
-              <p class="project-basis">BASIS: repository state · 2026-10-09 · SOURCE: private repo</p>
-            </article>
-
-            <article class="project" data-status="building" id="kittys-ai">
-              <header class="project-head">
-                <span class="project-code">PRJ-07 // LOCAL AI</span>
-                <span class="project-flags"><span class="status status-building">BUILDING</span></span>
-              </header>
-              <h4 class="project-name">Kittys AI</h4>
-              <p class="project-sum">A local, privacy-preserving Discord AI agent that helps run a cybersecurity study server and doubles as a personal knowledge-management helper.</p>
-              <ul class="tags" role="list" aria-label="Technologies">
-                <li>OpenClaw Gateway</li><li>Ollama</li><li>discord.py</li><li>SQLite</li>
-              </ul>
-              <details class="project-more">
-                <summary>SYSTEM DETAILS</summary>
-                <dl>
-                  <dt>CURRENT STATE</dt>
-                  <dd>Runs on the Windows workstation with a local model bridge. A September config-corruption incident was resolved; a couple of low-urgency items remain open.</dd>
-                  <dt>DESIGN RULES</dt>
-                  <dd>Secrets live in the gateway's own store, never in <code>.env</code> files. Bulk Discord edits go through a rate-limit-aware queue.</dd>
-                </dl>
-              </details>
-              <p class="project-basis">BASIS: last reviewed · 2026-09-07 · SOURCE: private repo</p>
-            </article>
-
-            <article class="project" data-status="building" id="bot-fleet">
-              <header class="project-head">
-                <span class="project-code">PRJ-08 // DISCORD</span>
-                <span class="project-flags"><span class="status status-building">BUILDING</span></span>
-              </header>
-              <h4 class="project-name">Discord bot fleet</h4>
-              <p class="project-sum">A small fleet of Python Discord bots covering entertainment, music and general chaos: After Hours Bot, Jester Bot, Kitty's Music Bot, Angrier Jordan and MentalError404.</p>
-              <ul class="tags" role="list" aria-label="Technologies">
-                <li>Python</li><li>Discord API</li><li>Docker</li>
-              </ul>
-              <details class="project-more">
-                <summary>SYSTEM DETAILS</summary>
-                <dl>
-                  <dt>CURRENT STATE</dt>
-                  <dd>Angrier Jordan and MentalError404: processes observed running on the home server; functionality not re-tested. After Hours, Jester and Music bots: source repositories exist; runtime NOT CHECKED.</dd>
-                  <dt>NEXT GATE</dt>
-                  <dd>One canonical register mapping each bot to its repository, runtime, server scope, secrets location and health check.</dd>
-                </dl>
-              </details>
-              <p class="project-basis">BASIS: repository list + process check · 2026-10-09 · SOURCE: private repos</p>
-            </article>
-
-            <article class="project" data-status="building" id="design-system">
-              <header class="project-head">
-                <span class="project-code">PRJ-09 // DESIGN</span>
-                <span class="project-flags"><span class="status status-building">BUILDING</span></span>
-              </header>
-              <h4 class="project-name">KrazyKitty Design System</h4>
-              <p class="project-sum">A documentation-first specification for how every surface in the ecosystem looks and behaves: measured design tokens, status semantics, component contracts and an accessibility checklist, plus a small reference CSS you're meant to read.</p>
-              <ul class="tags" role="list" aria-label="Technologies">
-                <li>CSS</li><li>Design tokens</li><li>WCAG</li><li>Documentation</li>
-              </ul>
-              <details class="project-more">
-                <summary>SYSTEM DETAILS</summary>
-                <dl>
-                  <dt>CURRENT STATE</dt>
-                  <dd>Version 0.1.0. Every contrast claim is measured and recorded, not estimated. Adoption is opt-in and gradual; this hub uses its token layer.</dd>
-                  <dt>DESIGN RULES</dt>
-                  <dd>Technical first, personality second, readability always. A value that was never measured is shown as UNKNOWN, never as a green tick.</dd>
-                </dl>
-              </details>
-              <p class="project-basis">BASIS: repository docs · v0.1.0 · SOURCE: private repo</p>
-            </article>
-
-            <article class="project" data-status="building" id="this-site">
-              <header class="project-head">
-                <span class="project-code">PRJ-10 // WEB</span>
-                <span class="project-flags"><span class="status status-building">BUILDING</span></span>
-              </header>
-              <h4 class="project-name">KITTYS<span class="sl">//</span>ECOSYSTEM</h4>
-              <p class="project-sum">This portfolio hub: hand-written HTML, CSS and a little vanilla JavaScript. No framework, no trackers, self-hosted fonts, and a design that stays readable with effects turned off.</p>
-              <ul class="tags" role="list" aria-label="Technologies">
-                <li>HTML</li><li>CSS</li><li>JavaScript</li><li>WCAG-minded</li>
-              </ul>
-              <details class="project-more">
-                <summary>SYSTEM DETAILS</summary>
-                <dl>
-                  <dt>NEXT GATE</dt>
-                  <dd>A dedicated page per project, a research blog, and a versioned deploy pipeline.</dd>
-                </dl>
-              </details>
-              <p class="project-basis">BASIS: this page · 2026-10-09</p>
-            </article>
-
-          </div>
-        </div>
-
-        <!-- ---------- 03 PLANNED ---------- -->
-        <div class="group" id="group-planned">
-          <div class="group-head">
-            <span class="group-num">03 //</span>
-            <h3 class="group-title">PLANNED</h3>
-            <span class="group-note">Designed or proposed. Not built.</span>
-          </div>
-          <div class="grid">
-
-            <article class="project" data-status="planned" id="kittyos">
-              <header class="project-head">
-                <span class="project-code">PRJ-11 // LINUX DISTRO</span>
-                <span class="project-flags"><span class="status status-planned">PLANNED</span></span>
-              </header>
-              <h4 class="project-name">KittyOS</h4>
-              <p class="project-sum">A long-term custom Linux distribution: privacy-focused, security-conscious, local-first and deeply customisable. Inspirations: BlackArch for buildability, Purple Kali for cyber-lab study, Omarchy for customisation.</p>
-              <ul class="tags" role="list" aria-label="Technologies">
-                <li>Linux</li><li>Packaging</li><li>ISO builds</li><li>VM testing</li>
-              </ul>
-              <details class="project-more">
-                <summary>SYSTEM DETAILS</summary>
-                <dl>
-                  <dt>CURRENT STATE</dt>
-                  <dd>Documentation, design and artwork only. There is no bootable image, package repository, installer or release yet.</dd>
-                  <dt>BUILD PATH</dt>
-                  <dd>source → packages → automated tests → ISO → VM validation → release artifacts → optional network boot. The home server would host builds and VM tests.</dd>
-                </dl>
-              </details>
-              <p class="project-basis">BASIS: design documents · 2026-10-09</p>
-            </article>
-
-            <article class="project" data-status="planned" id="kittyagent">
-              <header class="project-head">
-                <span class="project-code">PRJ-12 // AGENT RUNTIME</span>
-                <span class="project-flags"><span class="status status-planned">PLANNED</span></span>
-              </header>
-              <h4 class="project-name">KittyAgent</h4>
-              <p class="project-sum">The planned AI agent, execution runtime and backend that would sit behind KITTY<span class="sl">//</span>RELAY. Design intent: explicit authorisation, least privilege, verifiable tool results and human approval for consequential actions.</p>
-              <ul class="tags" role="list" aria-label="Technologies">
-                <li>Agents</li><li>Tool use</li><li>Local models</li><li>FastAPI</li>
-              </ul>
-              <details class="project-more">
-                <summary>SYSTEM DETAILS</summary>
-                <dl>
-                  <dt>CURRENT STATE</dt>
-                  <dd>Not started. Earlier AI-architecture research (a small agent kernel routing to specialist models) informs the design.</dd>
-                </dl>
-              </details>
-              <p class="project-basis">BASIS: design intent · 2026-10-09</p>
-            </article>
-
-            <article class="project" data-status="planned" id="kernel-sentinel">
-              <header class="project-head">
-                <span class="project-code">PRJ-13 // MONITORING</span>
-                <span class="project-flags"><span class="status status-planned">PROPOSED</span></span>
-              </header>
-              <h4 class="project-name">KERNEL<span class="sl">//</span>SENTINEL</h4>
-              <p class="project-sum">A proposed Raspberry Pi 400 monitoring and operations console, so the main Debian server can run headless while a dedicated screen shows the lab at a glance.</p>
-              <ul class="tags" role="list" aria-label="Technologies">
-                <li>Raspberry Pi</li><li>Dashboards</li><li>Observability</li>
-              </ul>
-              <details class="project-more">
-                <summary>SYSTEM DETAILS</summary>
-                <dl>
-                  <dt>CURRENT STATE</dt>
-                  <dd>The hardware has arrived. The name is a proposal and the software is not built.</dd>
-                </dl>
-              </details>
-              <p class="project-basis">BASIS: proposal · 2026-10-09</p>
-            </article>
-
-          </div>
-        </div>
-
       </div>
     </section>
 
-    <!-- ============ ROADMAP ============ -->
-    <section class="section" id="roadmap">
+    <section class="section" id="ecosystem" data-reveal>
       <div class="container">
-        <p class="eyebrow">// 02 ROADMAP &amp; ASPIRATIONS</p>
-        <h2 class="section-title">Foundations first, <em>then the big ideas</em></h2>
-        <p class="section-intro">
-          Order matters: verify the foundations before stacking ambition on top of them. These are plans and
-          aspirations, not promises or dates.
-        </p>
-
-        <div class="roadmap">
-          <article class="phase">
-            <p class="phase-tag">NEAR TERM</p>
-            <h3>Finish &amp; verify</h3>
-            <ul role="list">
-              <li>Live acceptance testing for KRAZY//CORE Theme Studio</li>
-              <li>KittyLM Milestone E, then the data pipeline</li>
-              <li>KRAZY//NEXUS read-only node telemetry</li>
-              <li>Home-server storage migration and verified backups</li>
-              <li>A real backend for KITTY//RELAY behind its API contract</li>
-              <li>A page for each project card on this hub</li>
-            </ul>
-          </article>
-          <article class="phase">
-            <p class="phase-tag">MEDIUM TERM</p>
-            <h3>Connect the ecosystem</h3>
-            <ul role="list">
-              <li>KRAZY//CORE profiles, Message Designer, Codeblock++ and developer tools</li>
-              <li>KittyOS package and build system with VM validation</li>
-              <li>KittyLM export and inference after reproducible baselines</li>
-              <li>Self-hosted Git, CI/CD, a private registry and artifact provenance</li>
-              <li>Central observability across nodes, bots and NEXUS</li>
-              <li>Defensive-security education content and more isolated lab environments</li>
-            </ul>
-          </article>
-          <article class="phase">
-            <p class="phase-tag">LONG TERM</p>
-            <h3>Lab &amp; career vision</h3>
-            <ul role="list">
-              <li>Grow the home lab: NAS, Raspberry Pi and mini-PC nodes, managed networking, a high-VRAM AI node. k3s only if multi-node needs justify it</li>
-              <li>Work in security engineering, DevSecOps or infrastructure security</li>
-              <li>Contribute to open source and publish carefully governed AI research</li>
-              <li>Grow KittyOS into a full ecosystem; build privacy and education tools</li>
-              <li>Explore game development</li>
-            </ul>
-          </article>
-        </div>
-        <p class="fineprint">// aspirations are listed so I can be held to them, and so I keep learning toward them</p>
-      </div>
-    </section>
-
-    <!-- ============ LEARNING ============ -->
-    <section class="section" id="learning">
-      <div class="container">
-        <p class="eyebrow">// 03 LEARNING, LAB &amp; STACK</p>
-        <h2 class="section-title">Studying while <em>building</em></h2>
-
-        <div class="two-col">
-          <div class="panel">
-            <h3>EDUCATION &amp; CERTIFICATION</h3>
-            <div class="rows">
-              <div class="row">
-                <p><strong>Google Cybersecurity Professional Certificate</strong>Security operations, network defence, incident response, Linux, SQL and Python for security automation.</p>
-                <span class="status status-building">IN PROGRESS · SINCE 20 SEP 2026</span>
-              </div>
-              <div class="row">
-                <p><strong>Computer Science degree (SETU, Level 8)</strong>Planned application via the CAO mature-applicant route. Not yet confirmed.</p>
-                <span class="status status-planned">PLANNED</span>
-              </div>
-            </div>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">// 01 ECOSYSTEM MAP</p>
+            <h2 class="section-title">One universe, <em>distinct boundaries</em></h2>
           </div>
-
-          <div class="panel">
-            <h3>TOOLBOX</h3>
-            <p class="stack-label">WORKING WITH</p>
-            <ul class="tags" role="list" aria-label="Working with">
-              <li>Python</li><li>TypeScript</li><li>JavaScript</li><li>React</li><li>FastAPI</li><li>PostgreSQL</li>
-              <li>SQL</li><li>Bash</li><li>PowerShell</li><li>Docker</li><li>Debian</li><li>Virtual machines</li><li>Git &amp; GitHub</li>
-            </ul>
-            <p class="stack-label">LEARNING</p>
-            <ul class="tags" role="list" aria-label="Learning">
-              <li>CI/CD</li><li>Kubernetes</li><li>C</li><li>BlackArch</li><li>Omarchy</li><li>Detection engineering</li><li>Threat modelling</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="panel panel-wide" id="linux-lab">
-          <h3>LINUX &amp; CYBER LAB</h3>
-          <p>
-            I've worked hands-on in virtual machines inside a simulated cyber lab, using ParrotOS and Purple Kali.
-            I'm now learning BlackArch and Omarchy and exploring other Linux distributions to understand how their
-            design choices differ. The lab is defensive and educational in purpose. These distros are also the
-            reference points for <a href="#kittyos">KittyOS</a>.
+          <p class="section-intro">
+            The ecosystem connects infrastructure, research and interfaces, but each project keeps its own
+            authority boundary. The map is conceptual—not live network telemetry.
           </p>
-          <div class="distros">
-            <article class="distro">
-              <h4>ParrotOS</h4>
-              <span class="status status-hands-on">HANDS-ON</span>
-              <p>Debian-based, security-focused distribution. Used in VMs in the simulated cyber lab.</p>
-            </article>
-            <article class="distro">
-              <h4>Purple Kali</h4>
-              <span class="status status-hands-on">HANDS-ON</span>
-              <p>Kali's defensive-leaning edition (Kali Purple). Used in VMs in the simulated cyber lab.</p>
-            </article>
-            <article class="distro">
-              <h4>BlackArch</h4>
-              <span class="status status-learning">LEARNING</span>
-              <p>Arch-based distribution built around a very large repository of security tools.</p>
-            </article>
-            <article class="distro">
-              <h4>Omarchy</h4>
-              <span class="status status-learning">LEARNING</span>
-              <p>An opinionated Arch-based desktop setup I'm studying for its approach to customisation.</p>
-            </article>
-            <article class="distro">
-              <h4>Other distros</h4>
-              <span class="status status-exploring">EXPLORING</span>
-              <p>Comparing how different distributions handle packaging, defaults and tooling.</p>
-            </article>
+        </div>
+
+        <div class="flowline">
+          <span>FOUNDATIONS</span><span aria-hidden="true">→</span>
+          <span>INTELLIGENCE</span><span aria-hidden="true">→</span>
+          <span>INTERFACES</span><span aria-hidden="true">→</span>
+          <span>LEARNING</span>
+        </div>
+
+        <div class="ecosystem-grid">
+          <article class="system-node node-foundation">
+            <p class="node-index">NODE 01</p>
+            <h3>FOUNDATION</h3>
+            <p>Self-hosted infrastructure, monitoring and carefully bounded management.</p>
+            <ul>
+              <li>KERNEL<span class="slash">//</span>KITTY</li>
+              <li>KERNEL<span class="slash">//</span>SENTINEL</li>
+              <li>KITTY<span class="slash">//</span>NEXUS</li>
+            </ul>
+          </article>
+          <article class="system-node node-intelligence">
+            <p class="node-index">NODE 02</p>
+            <h3>INTELLIGENCE</h3>
+            <p>Language-model research, local inference and permission-aware agent experiments.</p>
+            <ul>
+              <li>KittyLM</li>
+              <li>Local model evaluation</li>
+              <li>Agent research</li>
+            </ul>
+          </article>
+          <article class="system-node node-interface">
+            <p class="node-index">NODE 03</p>
+            <h3>INTERFACES</h3>
+            <p>Surfaces where the ecosystem becomes usable, visible and testable.</p>
+            <ul>
+              <li>KRAZY<span class="slash">//</span>CORE</li>
+              <li>KITTY<span class="slash">//</span>RELAY</li>
+              <li>krazykitty.dev</li>
+            </ul>
+          </article>
+          <article class="system-node node-community">
+            <p class="node-index">NODE 04</p>
+            <h3>COMMUNITY &amp; CREATIVE</h3>
+            <p>Discord tooling, shared experiences and creator-facing experiments.</p>
+            <ul>
+              <li>SOUL<span class="slash">//</span>CORE</li>
+              <li>LOVE<span class="slash">//</span>TERMINAL</li>
+              <li>KITTY<span class="slash">//</span>CONTROL</li>
+            </ul>
+          </article>
+          <article class="system-node node-systems">
+            <p class="node-index">NODE 05</p>
+            <h3>SYSTEMS RESEARCH</h3>
+            <p>Operating-system, desktop and low-level engineering explored through realistic milestones.</p>
+            <ul>
+              <li>KITTY<span class="slash">//</span>LINUX</li>
+              <li>KITTY<span class="slash">//</span>DESKTOP</li>
+              <li>AETHER<span class="slash">//</span>RUST</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects" data-reveal>
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">// 02 FEATURED SYSTEMS</p>
+            <h2 class="section-title">What exists <em>right now</em></h2>
+          </div>
+          <p class="section-intro">
+            Lifecycle labels describe maturity; priority labels describe attention. This is a dated public
+            snapshot, not live monitoring and not a claim that every repository is production-ready.
+          </p>
+        </div>
+
+        <ul class="lifecycle-legend" aria-label="Lifecycle legend">
+          <li><span class="status status-operating">OPERATING</span> observed running or in use</li>
+          <li><span class="status status-active">ACTIVE</span> under current development</li>
+          <li><span class="status status-maintaining">MAINTAINING</span> supported or archived for upkeep</li>
+          <li><span class="status status-planned">PLANNED</span> scoped but not represented as built</li>
+        </ul>
+
+        <search class="filters" aria-label="Filter featured projects by lifecycle">
+          <button class="chip-btn" type="button" data-filter="all" aria-pressed="true">ALL</button>
+          <button class="chip-btn" type="button" data-filter="operating" aria-pressed="false">OPERATING</button>
+          <button class="chip-btn" type="button" data-filter="active" aria-pressed="false">ACTIVE</button>
+          <button class="chip-btn" type="button" data-filter="maintaining" aria-pressed="false">MAINTAINING</button>
+          <button class="chip-btn" type="button" data-filter="planned" aria-pressed="false">PLANNED</button>
+        </search>
+        <p class="kk-visually-hidden" id="filter-status" role="status" aria-live="polite"></p>
+
+        <div class="project-grid" id="project-grid">
+          <article class="project" data-status="active">
+            <header class="project-head">
+              <p class="project-code">SYS-01 // UI ENGINEERING</p>
+              <div class="project-flags"><span class="priority priority-p0">P0</span><span class="status status-active">ACTIVE</span></div>
+            </header>
+            <h3>KRAZY<span class="slash">//</span>CORE</h3>
+            <p>A modular Equicord customisation ecosystem spanning appearance, profiles, developer tools and a coordinated Theme Studio.</p>
+            <ul class="tags"><li>TypeScript</li><li>React</li><li>CSS architecture</li></ul>
+            <details>
+              <summary>PROJECT SNAPSHOT</summary>
+              <dl><dt>CURRENT</dt><dd>Primary implementation track with shared runtime and transaction boundaries.</dd><dt>NEXT GATE</dt><dd>Live client acceptance testing and focused reliability work.</dd></dl>
+            </details>
+          </article>
+
+          <article class="project" data-status="operating">
+            <header class="project-head">
+              <p class="project-code">SYS-02 // INFRASTRUCTURE</p>
+              <div class="project-flags"><span class="priority priority-p0">P0</span><span class="status status-operating">OPERATING</span></div>
+            </header>
+            <h3>KERNEL<span class="slash">//</span>KITTY</h3>
+            <p>The Debian-based self-hosted foundation for container services, local DNS, proxying, storage and observability.</p>
+            <ul class="tags"><li>Debian</li><li>Docker</li><li>FastAPI</li><li>Monitoring</li></ul>
+            <details>
+              <summary>PROJECT SNAPSHOT</summary>
+              <dl><dt>CURRENT</dt><dd>Operational and in a hardening phase. “Operating” is not a blanket security-health claim.</dd><dt>NEXT GATE</dt><dd>Storage, recovery and security telemetry verification.</dd></dl>
+            </details>
+          </article>
+
+          <article class="project" data-status="active">
+            <header class="project-head">
+              <p class="project-code">SYS-03 // OBSERVABILITY</p>
+              <div class="project-flags"><span class="priority priority-p0">P0</span><span class="status status-active">ACTIVE</span></div>
+            </header>
+            <h3>KERNEL<span class="slash">//</span>SENTINEL</h3>
+            <p>A dedicated Raspberry Pi monitoring and operations display for the home-lab environment.</p>
+            <ul class="tags"><li>Raspberry Pi</li><li>Dashboards</li><li>Operations</li></ul>
+            <details>
+              <summary>PROJECT SNAPSHOT</summary>
+              <dl><dt>CURRENT</dt><dd>Active build and configuration work.</dd><dt>NEXT GATE</dt><dd>A reliable, read-only-first monitoring surface with honest unknown states.</dd></dl>
+            </details>
+          </article>
+
+          <article class="project" data-status="active">
+            <header class="project-head">
+              <p class="project-code">SYS-04 // AI RESEARCH</p>
+              <div class="project-flags"><span class="priority priority-p1">P1</span><span class="status status-active">ACTIVE</span></div>
+            </header>
+            <h3>KittyLM</h3>
+            <p>A from-scratch language-model research platform built to understand tokenisation, architecture, training, evaluation and inference.</p>
+            <ul class="tags"><li>Python</li><li>PyTorch</li><li>ROCm</li><li>Evaluation</li></ul>
+            <details>
+              <summary>PROJECT SNAPSHOT</summary>
+              <dl><dt>CURRENT</dt><dd>Core tokenizer, model, training and evaluation groundwork exists; research remains ongoing.</dd><dt>NEXT GATE</dt><dd>GPU smoke testing, then a gated data pipeline and reproducible baselines.</dd></dl>
+            </details>
+          </article>
+
+          <article class="project" data-status="active">
+            <header class="project-head">
+              <p class="project-code">SYS-05 // DISCORD PLATFORM</p>
+              <div class="project-flags"><span class="priority priority-p1">P1</span><span class="status status-active">ACTIVE</span></div>
+            </header>
+            <h3>SOUL<span class="slash">//</span>CORE</h3>
+            <p>A private, deny-by-default modular Discord application with staged features and explicit permission boundaries.</p>
+            <ul class="tags"><li>Python</li><li>Discord</li><li>CI</li><li>Least privilege</li></ul>
+            <details>
+              <summary>PROJECT SNAPSHOT</summary>
+              <dl><dt>CURRENT</dt><dd>Foundation work is implemented; Discord connection and later integrations remain development work.</dd><dt>NEXT GATE</dt><dd>Controlled connection work with no live identifiers or secrets in evidence.</dd></dl>
+            </details>
+          </article>
+
+          <article class="project" data-status="active">
+            <header class="project-head">
+              <p class="project-code">SYS-06 // TELEGRAM INTERFACE</p>
+              <div class="project-flags"><span class="priority priority-p1">P1</span><span class="status status-active">ACTIVE</span></div>
+            </header>
+            <h3>KITTY<span class="slash">//</span>RELAY</h3>
+            <p>A Telegram-connected AI and development assistant designed around controlled automation and a typed interface contract.</p>
+            <ul class="tags"><li>React</li><li>TypeScript</li><li>FastAPI</li><li>Telegram</li></ul>
+            <details>
+              <summary>PROJECT SNAPSHOT</summary>
+              <dl><dt>CURRENT</dt><dd>The frontend operates in clearly labelled demo mode while backend architecture is refined.</dd><dt>NEXT GATE</dt><dd>A real backend with platform-data validation and capability-based authorisation.</dd></dl>
+            </details>
+          </article>
+
+          <article class="project" data-status="active">
+            <header class="project-head">
+              <p class="project-code">SYS-07 // LINUX SYSTEM</p>
+              <div class="project-flags"><span class="priority priority-p1">P1</span><span class="status status-active">ACTIVE</span></div>
+            </header>
+            <h3>KITTY<span class="slash">//</span>LINUX</h3>
+            <p>A privacy-focused, local-first Linux system with a distinctive cyber-violet desktop and developer-oriented profiles.</p>
+            <ul class="tags"><li>Linux</li><li>Packaging</li><li>Desktop UX</li><li>VM testing</li></ul>
+            <details>
+              <summary>PROJECT SNAPSHOT</summary>
+              <dl><dt>CURRENT</dt><dd>In active development and research; no public release is being claimed.</dd><dt>NEXT GATE</dt><dd>Small, reproducible milestones for packages, profiles and virtual-machine validation.</dd></dl>
+            </details>
+          </article>
+
+          <article class="project" data-status="active">
+            <header class="project-head">
+              <p class="project-code">SYS-08 // CONTROL PLANE</p>
+              <div class="project-flags"><span class="priority priority-p1">P1</span><span class="status status-active">ACTIVE</span></div>
+            </header>
+            <h3>KITTY<span class="slash">//</span>NEXUS</h3>
+            <p>The user-facing management and observability control plane for carefully bounded home-lab operations.</p>
+            <ul class="tags"><li>FastAPI</li><li>React</li><li>PostgreSQL</li><li>Security</li></ul>
+            <details>
+              <summary>PROJECT SNAPSHOT</summary>
+              <dl><dt>CURRENT</dt><dd>In development, with read-only-first management and auditability as core constraints.</dd><dt>NEXT GATE</dt><dd>Bounded telemetry before any privileged operation is considered.</dd></dl>
+            </details>
+          </article>
+
+          <article class="project" data-status="active">
+            <header class="project-head">
+              <p class="project-code">SYS-09 // LOCAL TOOLING</p>
+              <div class="project-flags"><span class="priority priority-p1">P1</span><span class="status status-active">ACTIVE</span></div>
+            </header>
+            <h3>KRAZY<span class="slash">//</span>FILEFLOW</h3>
+            <p>Local tooling for file inventories, project organisation, migration checks and integrity-aware operations.</p>
+            <ul class="tags"><li>Python</li><li>File integrity</li><li>Workflow</li></ul>
+            <details>
+              <summary>PROJECT SNAPSHOT</summary>
+              <dl><dt>CURRENT</dt><dd>Active development shaped around narrow, testable and reversible operations.</dd><dt>NEXT GATE</dt><dd>A focused first workflow with dry-run output and explicit approval boundaries.</dd></dl>
+            </details>
+          </article>
+
+          <article class="project" data-status="maintaining">
+            <header class="project-head">
+              <p class="project-code">SYS-10 // WEB</p>
+              <div class="project-flags"><span class="priority priority-p2">P2</span><span class="status status-maintaining">MAINTAINING</span></div>
+            </header>
+            <h3>krazykitty.dev</h3>
+            <p>This hand-built portfolio and research hub: static HTML, CSS and vanilla JavaScript with no trackers or third-party runtime.</p>
+            <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Accessibility</li></ul>
+            <details>
+              <summary>PROJECT SNAPSHOT</summary>
+              <dl><dt>CURRENT</dt><dd>The KRAZYKITTY // ECOSYSTEM identity and public project map are being consolidated here.</dd><dt>NEXT GATE</dt><dd>Project pages, writing and a versioned deployment process.</dd></dl>
+            </details>
+          </article>
+
+          <article class="project" data-status="maintaining">
+            <header class="project-head">
+              <p class="project-code">SYS-11 // CREATIVE ARCHIVE</p>
+              <div class="project-flags"><span class="priority priority-p2">P2</span><span class="status status-maintaining">MAINTAINING</span></div>
+            </header>
+            <h3>LOVE<span class="slash">//</span>TERMINAL</h3>
+            <p>A completed React and TypeScript desktop-style creative experience, retained as an archive for maintenance and future polish.</p>
+            <ul class="tags"><li>React</li><li>TypeScript</li><li>Interactive UI</li></ul>
+            <details>
+              <summary>PROJECT SNAPSHOT</summary>
+              <dl><dt>CURRENT</dt><dd>Built and archived; not an active heavy coding track.</dd><dt>NEXT GATE</dt><dd>Preservation, documentation and optional visual refinement.</dd></dl>
+            </details>
+          </article>
+
+          <article class="project" data-status="planned">
+            <header class="project-head">
+              <p class="project-code">SYS-12 // CREATOR TOOLS</p>
+              <div class="project-flags"><span class="priority priority-p2">P2</span><span class="status status-planned">PLANNED</span></div>
+            </header>
+            <h3>KITTY<span class="slash">//</span>CONTROL</h3>
+            <p>A creator-facing control surface for OBS, streaming workflows, device integrations and custom interfaces.</p>
+            <ul class="tags"><li>OBS</li><li>Automation</li><li>Creator UX</li></ul>
+            <details>
+              <summary>PROJECT SNAPSHOT</summary>
+              <dl><dt>CURRENT</dt><dd>Development ideas and scope—not presented as a finished application.</dd><dt>NEXT GATE</dt><dd>Select one useful control workflow and prototype it safely.</dd></dl>
+            </details>
+          </article>
+        </div>
+        <p class="fineprint">PUBLIC STATUS SNAPSHOT: <time datetime="2026-10-10">10 October 2026</time> · private repositories are described, not exposed.</p>
+      </div>
+    </section>
+
+    <section class="section" id="universe" data-reveal>
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">// 03 DEVELOPMENT UNIVERSE</p>
+            <h2 class="section-title">A portfolio map, <em>not a completion claim</em></h2>
+          </div>
+          <p class="section-intro">
+            The wider catalogue contains 53 named entries across seven families. Some are operating systems,
+            some are active code, some are modules, and some are intentionally future concepts.
+          </p>
+        </div>
+
+        <div class="universe-grid">
+          <article><span>01</span><h3>CORE &amp; APPLICATIONS</h3><p>Public-facing tools, platforms, bots and shared experiences.</p></article>
+          <article><span>02</span><h3>HOMELAB &amp; NETWORK</h3><p>Self-hosted infrastructure, nodes, monitoring and operational tooling.</p></article>
+          <article><span>03</span><h3>OPERATING SYSTEMS</h3><p>Linux, desktop and lower-level systems research.</p></article>
+          <article><span>04</span><h3>AI &amp; AGENTS</h3><p>Language models, evaluation, local inference and controlled automation.</p></article>
+          <article><span>05</span><h3>SECURITY &amp; DEFENCE</h3><p>Threat modelling, defensive labs, verification and least privilege.</p></article>
+          <article><span>06</span><h3>DEVELOPER TOOLS</h3><p>CLIs, build environments, file workflows and engineering utilities.</p></article>
+          <article><span>07</span><h3>CREATIVE SYSTEMS</h3><p>Visual, audio, creator, game and interactive experience concepts.</p></article>
+        </div>
+        <p class="scope-note">
+          Naming-archive and concept-atlas material informs visual direction and future exploration.
+          It does not turn proposed names into active products.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="roadmap" data-reveal>
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">// 04 PUBLIC ROADMAP</p>
+            <h2 class="section-title">Foundations first, <em>frontier later</em></h2>
+          </div>
+          <p class="section-intro">
+            This sequence expresses engineering order, not fixed delivery dates. Each stage must earn the next
+            through evidence, tests and realistic resource limits.
+          </p>
+        </div>
+
+        <ol class="roadmap">
+          <li class="roadmap-step">
+            <span>01</span>
+            <div><h3>STABILISE THE CORE</h3><p>Harden operational systems, verify recovery, and finish current acceptance gates.</p></div>
+          </li>
+          <li class="roadmap-step">
+            <span>02</span>
+            <div><h3>SHIP USEFUL TOOLS</h3><p>Move selected ideas into small, documented products with tests and clear boundaries.</p></div>
+          </li>
+          <li class="roadmap-step">
+            <span>03</span>
+            <div><h3>CONNECT THE LAYERS</h3><p>Integrate validated interfaces, infrastructure and AI without collapsing their permissions.</p></div>
+          </li>
+          <li class="roadmap-step">
+            <span>04</span>
+            <div><h3>EXPLORE THE FRONTIER</h3><p>Prototype ambitious systems work only after the foundations are reproducible and maintainable.</p></div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" id="about" data-reveal>
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">// 05 ABOUT &amp; PRINCIPLES</p>
+            <h2 class="section-title">Learning by <em>building carefully</em></h2>
+          </div>
+          <p class="section-intro">
+            I’m a Computer Science student working across Python, web engineering, Linux, local AI,
+            cybersecurity and self-hosted systems.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <article class="about-panel profile-panel">
+            <img src="assets/img/avatar.webp" width="640" height="640" loading="lazy"
+                 alt="KrazyKitty's neon avatar: a red-haired character with cat ears and glasses holding a handheld console beside a glowing pixel cat.">
+            <div>
+              <p class="eyebrow">// KRAZYKITTY</p>
+              <h3>COMPUTER SCIENCE STUDENT</h3>
+              <p>Python developer • cybersecurity enthusiast • AI/LLM researcher • systems builder</p>
+              <ul class="tags">
+                <li>Python</li><li>TypeScript</li><li>FastAPI</li><li>React</li>
+                <li>Linux</li><li>Docker</li><li>Git</li><li>Local AI</li>
+              </ul>
+            </div>
+          </article>
+
+          <div class="principles">
+            <article><h3>LOCAL-FIRST</h3><p>Prefer local inference and self-hosting where practical, with sensitive workloads kept under explicit control.</p></article>
+            <article><h3>LEAST PRIVILEGE</h3><p>Agents and tools receive narrow permissions; consequential actions require human approval.</p></article>
+            <article><h3>HONEST STATUS</h3><p>Unknown is not healthy. Demo data, plans and unverified states are labelled rather than blurred together.</p></article>
+            <article><h3>REPRODUCIBLE PROGRESS</h3><p>Build, test, document and preserve evidence before claiming a result works.</p></article>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ PRINCIPLES ============ -->
-    <section class="section" id="principles">
-      <div class="container">
-        <p class="eyebrow">// 04 PRINCIPLES</p>
-        <h2 class="section-title">How I <em>build</em></h2>
-
-        <div class="principles">
-          <article class="principle">
-            <h3>Local-first &amp; private</h3>
-            <p>Prefer local inference and self-hosting where practical. Sensitive workloads stay on hardware I control.</p>
-          </article>
-          <article class="principle">
-            <h3>Least-privilege agents</h3>
-            <p>AI tools get explicit, scoped permissions. Consequential actions need a human to approve them.</p>
-          </article>
-          <article class="principle">
-            <h3>Honest telemetry</h3>
-            <p>Unknown is not healthy. Demos are labelled as demos. A status I can't verify isn't shown as good news.</p>
-          </article>
-          <article class="principle">
-            <h3>Build, measure, understand</h3>
-            <p>Learn by building real systems, record the evidence, and only then claim it works.</p>
-          </article>
+    <section class="section section-contact" id="contact" data-reveal>
+      <div class="container contact-panel">
+        <div>
+          <p class="eyebrow">// 06 CONTACT</p>
+          <h2 class="section-title">Follow the <em>build log</em></h2>
+          <p>GitHub is the public entry point while most work develops privately and moves through evidence-based gates.</p>
         </div>
+        <a class="btn btn-primary" href="https://github.com/krazykitty2503" rel="me noopener">
+          GITHUB // KRAZYKITTY2503
+        </a>
       </div>
     </section>
-
-    <!-- ============ CONTACT ============ -->
-    <section class="section" id="contact">
-      <div class="container">
-        <p class="eyebrow">// 05 CONTACT</p>
-        <h2 class="section-title">Say <em>hello</em></h2>
-        <p class="section-intro">My GitHub profile is the best place to find me for now. Most repositories are private while they mature; more ways to get in touch will be added here as the hub grows.</p>
-
-        <div class="contact">
-          <a class="btn btn-primary" href="https://github.com/krazykitty2503" rel="me noopener">GITHUB // KRAZYKITTY2503</a>
-        </div>
-
-        <figure class="banner">
-          <img src="assets/img/banner-discord.webp" width="1600" height="640" loading="lazy"
-               alt="Pixel-art black cat with glowing cyan eyes sitting on a floating crystal island labelled CATOS, in a violet sky, with retro 404 “paw not found” windows.">
-          <figcaption>// the Discord banner: a lost-but-adorable CATOS 404</figcaption>
-        </figure>
-      </div>
-    </section>
-
   </main>
 
-  <!-- ============ FOOTER ============ -->
   <footer class="site-footer">
     <div class="container site-footer-inner">
-      <p class="footer-brand">KITTYS<span class="sl">//</span>ECOSYSTEM</p>
-      <p class="footer-line">KRAZYKITTY // Born to customize. Built to stand out.</p>
-      <p class="footer-line">kitty@krazykitty:~$ <code>initialize --theme=neon-violet --mode=cyberpunk --identity=neko</code></p>
-      <p class="footer-line">Statuses reviewed <time datetime="2026-10-09">2026-10-09</time> · static page · no tracking · tokens: KrazyKitty Design System v0.1.0</p>
+      <p class="footer-brand">KRAZYKITTY <span class="slash">//</span> ECOSYSTEM</p>
+      <p class="footer-line">DEVELOPMENT UNIVERSE · SYSTEMS • SECURITY • INFRASTRUCTURE • AI</p>
+      <p class="footer-line">Static page · no tracking · public snapshot <time datetime="2026-10-10">2026-10-10</time></p>
     </div>
   </footer>
 </body>

@@ -1,525 +1,226 @@
-# 💜 KrazyKitty.dev
-
-> **My digital home, development portfolio, engineering laboratory, and gateway into the KRAZYKITTY // DEVELOPMENT UNIVERSE.**
-
-```text
-kitty@krazykitty:~$ ./initialize krazykitty.dev
-
-[ OK ] Identity............... KRAZYKITTY
-[ OK ] Interface.............. ULTRAVIOLET
-[ OK ] Cybersecurity.......... ONLINE
-[ OK ] Development............ ACTIVE
-[ OK ] Systems Engineering.... ACTIVE
-[ OK ] AI / ML Research....... ACTIVE
-[ OK ] Homelab................ CONNECTED
-[ OK ] Neko Protocol.......... ENABLED
-
-> Welcome to my world.
-```
-
----
-
-## `01 // ABOUT`
-
-**KrazyKitty.dev** is my personal website and central digital hub for everything I build, study, experiment with, and create across technology.
-
-I'm **Kitty / KrazyKitty** — a Computer Science student, cybersecurity analyst, Python developer, systems enthusiast, AI/ML experimenter, homelab builder, and someone who has a slight obsession with turning ordinary software into glowing violet futuristic control systems.
-
-This website brings together my:
-
-- 💻 Software development
-- 🛡️ Cybersecurity work
-- 🐧 Linux and systems engineering
-- 🌐 Networking and infrastructure
-- 🧠 Artificial intelligence & machine learning
-- 🤖 AI agent development
-- 🏠 Homelab experimentation
-- 🐳 Docker and self-hosted services
-- 🎨 UI/UX and interface customisation
-- 🧪 Research and experimental projects
-- 📚 Technical learning journey
-- 💜 Personal creative projects
-
-Rather than being a traditional portfolio containing a few disconnected projects, **KrazyKitty.dev represents the larger ecosystem I am gradually building.**
-
----
-
-# `02 // KRAZYKITTY`
-
-I love learning how systems work beneath the surface.
-
-Not simply how to *use* technology, but how to:
-
-```text
-build it
-break it
-secure it
-debug it
-redesign it
-automate it
-connect it
-monitor it
-and understand why it works
-```
-
-My interests cross several areas of computing, which means one day I might be working with Python or TypeScript, another day configuring a Debian server, experimenting with an LLM architecture, designing an Equicord plugin, analysing logs, building Docker infrastructure, or planning an operating system.
-
-I am continuously developing my knowledge rather than presenting myself as someone who has already mastered everything.
-
-This website documents that journey.
-
----
-
-# `03 // DEVELOPMENT UNIVERSE`
-
-A major part of my work is organised into interconnected projects with their own identities, purposes, architectures, and long-term development goals.
-
-Some of the systems within the wider **KRAZYKITTY // DEVELOPMENT UNIVERSE** include:
-
-### `KRAZY//CORE`
-
-My Equicord development and customisation ecosystem.
-
-A growing collection of appearance, interface, visual-engine and Discord customisation projects built around modularity, experimentation and highly polished UI design.
-
----
-
-### `KERNEL//KITTY`
-
-My Debian-powered homelab and primary home server environment.
-
-Used for experimenting with:
-
-- Linux administration
-- Docker
-- networking
-- self-hosting
-- monitoring
-- infrastructure
-- security
-- automation
-- remote administration
-- development services
-
----
-
-### `KERNEL//SENTINEL`
-
-My Raspberry Pi-based homelab monitoring and operational console.
-
-Designed to complement KERNEL//KITTY by providing a dedicated lightweight system for monitoring, administration and infrastructure experimentation.
-
----
-
-### `KITTY//RELAY`
-
-My Telegram-based AI and developer assistant project.
-
-Designed around the idea of connecting messaging, automation, development tooling, AI capabilities and personal infrastructure through a unified interface.
-
----
-
-### `KittyLM`
-
-My language-model research and development project.
-
-A long-term learning project exploring the technologies behind modern language models, including:
-
-- tokenisation
-- embeddings
-- transformer architectures
-- training pipelines
-- datasets
-- evaluation
-- inference
-- model optimisation
-- agent systems
-
----
-
-### `KITTY//LINUX`
-
-My planned custom Linux distribution project.
-
-A long-term systems-engineering challenge intended to deepen my understanding of Linux internals, distribution design, packaging, system configuration, security, desktop environments and operating-system architecture.
-
----
-
-### `AETHER//RUST`
-
-My experimental Rust operating-system development plan.
-
-A deeper exploration into:
-
-- low-level programming
-- memory management
-- kernels
-- boot processes
-- hardware interaction
-- schedulers
-- filesystems
-- operating-system architecture
-- memory-safe systems engineering
-
----
-
-### `SOUL//LINK`
-
-A more personal branch of my development universe combining software, design, communication and shared digital experiences.
-
-It represents the point where engineering becomes something emotional and personal rather than purely technical.
-
----
-
-# `04 // SKILLS`
-
-My skillset is continuously evolving across several connected technical disciplines.
-
-### Programming & Development
-
-```text
-Python
-JavaScript
-TypeScript
-HTML
-CSS
-React
-Git
-GitHub
-API Development
-Automation
-Software Architecture
-Debugging
-Testing
-```
-
-### Cybersecurity
-
-```text
-Security Analysis
-System Hardening
-Log Analysis
-Authentication
-Access Control
-Network Security
-Threat Awareness
-Security Research
-Linux Security
-Defensive Security
-```
-
-### Systems & Networking
-
-```text
-Linux
-Debian
-Windows
-Bash
-PowerShell
-SSH
-Networking
-DNS
-Remote Administration
-System Monitoring
-Troubleshooting
-Server Administration
-```
-
-### Infrastructure & DevOps
-
-```text
-Docker
-Containers
-GitHub Workflows
-CI/CD Concepts
-Self-Hosting
-Homelab Infrastructure
-Service Deployment
-System Observability
-Infrastructure Planning
-```
-
-### AI & Machine Learning
-
-```text
-LLM Architecture
-Transformer Concepts
-Tokenisation
-Embeddings
-Model Training Concepts
-Inference
-AI Agents
-Prompt Engineering
-Model Evaluation
-AI-assisted Development
-```
-
-### Design & Interface Engineering
-
-```text
-UI/UX
-Dark Interface Design
-Glassmorphism
-Cyberpunk Interfaces
-Discord Customisation
-Design Systems
-Responsive Interfaces
-Accessibility Awareness
-Interactive Dashboards
-```
-
----
-
-# `05 // HOMELAB`
-
-My homelab acts as one of my most important practical learning environments.
-
-Instead of learning everything purely from documentation or simulations, I enjoy maintaining real hardware and services where I can experiment with infrastructure directly.
-
-```text
-                 KRAZYKITTY // HOMELAB
-
-                        INTERNET
-                           │
-                           ▼
-                    ┌─────────────┐
-                    │   NETWORK   │
-                    └──────┬──────┘
-                           │
-             ┌─────────────┴─────────────┐
-             │                           │
-             ▼                           ▼
-      KERNEL//KITTY              KERNEL//SENTINEL
-       Debian Server               Raspberry Pi
-             │                           │
-             ▼                           ▼
-       Docker Services             Monitoring
-       Development                 Diagnostics
-       Storage                     Operations
-       Networking                  Administration
-       Automation
-       Security
-```
-
-The goal is to keep expanding this environment as my systems knowledge develops.
-
----
-
-# `06 // DESIGN LANGUAGE`
-
-My projects share a visual identity inspired by:
-
-**dark cyberpunk × hacker terminals × futuristic operating systems × neon violet × anime neko-tech**
-
-The core visual philosophy is:
-
-> **Controlled complexity — futuristic and technically detailed without sacrificing usability.**
-
-### Signature Palette
-
-| Colour | Hex | Purpose |
+# KRAZYKITTY // ECOSYSTEM
+
+KrazyKitty.dev is the public home of the **KRAZYKITTY // ECOSYSTEM** and its supporting
+**DEVELOPMENT UNIVERSE**.
+
+The site is a dependency-free static build: semantic HTML, CSS and a small amount of
+vanilla JavaScript. It has no framework, build step, analytics, cookies or third-party
+runtime requests.
+
+Public content snapshot: **10 October 2026**.
+
+## Public identity
+
+- Primary identity: **KRAZYKITTY // ECOSYSTEM**
+- Supporting descriptor: **DEVELOPMENT UNIVERSE**
+- Hero line: **SYSTEMS • SECURITY • INFRASTRUCTURE • AI**
+- Public author identity: **Kitty / KrazyKitty**
+- Education wording: **Computer Science student**
+
+The previous public names for the Linux and control-plane projects are intentionally not
+used. Their public names are now **KITTY//LINUX** and **KITTY//NEXUS**.
+
+## Site structure
+
+    index.html
+    assets/
+      css/
+        fonts.css
+        kk-tokens.css
+        site.css
+      js/
+        main.js
+      img/
+        avatar.webp
+        favicon.svg
+        hero-ecosystem-1280.webp
+        hero-ecosystem-2172.webp
+        og-ecosystem.jpg
+      fonts/
+        self-hosted Orbitron, Inter and Share Tech Mono files
+
+Older artwork remains in the asset folder for provenance, but the page does not reference
+the retired hero or social card.
+
+## Information architecture
+
+1. Hero and public identity
+2. Current public priority stack
+3. Conceptual ecosystem map
+4. Featured project registry
+5. Seven-family Development Universe
+6. Public technical roadmap
+7. About, engineering principles and contact
+
+The full Development Universe is a catalogue of named systems, modules and concepts. It is
+not a claim that every entry is a completed application.
+
+## Status model
+
+The site deliberately separates two dimensions:
+
+| Dimension | Values | Meaning |
 |---|---|---|
-| 🖤 Obsidian Black | `#090611` | Primary background |
-| 🌑 Midnight Violet | `#170D2B` | Panels and surfaces |
-| 💜 Royal Purple | `#6D28D9` | Primary branding |
-| ⚡ Electric Violet | `#8B5CF6` | Interactive elements |
-| 🔮 Neon Amethyst | `#A855F7` | Glow and highlights |
-| 🌸 Soft Lavender | `#D8B4FE` | Secondary text |
-| ❤️ Neon Crimson | `#E11D48` | Secondary accent |
-| 🤍 Icy Silver | `#E2E0F0` | Primary text |
+| Lifecycle | Operating, Active, Maintaining, Planned | How mature or active the project is |
+| Priority | P0, P1, P2, P3 | Where attention currently sits |
 
-My interfaces frequently incorporate:
+**Operating** means observed running or in use at the dated review point. It is not a
+blanket security, backup or availability claim. **Active** means current development, not
+production readiness. **Planned** content remains clearly labelled.
 
-```text
-glassmorphism
-terminal interfaces
-subtle glow
-HUD elements
-system diagnostics
-monospaced typography
-animated status indicators
-data visualisation
-scanlines
-grids
-neon borders
-layered dark surfaces
-```
+The public work-in-progress rule is a maximum of three heavy coding tracks at once. The
+portfolio can contain more active projects because some work is staged, maintained or
+waiting at a gate.
 
----
+## Public-content boundary
 
-# `07 // WEBSITE`
+Do not add:
 
-KrazyKitty.dev is intended to evolve alongside me.
+- credentials, tokens, private keys or secrets;
+- private IP addresses, host identifiers or detailed network topology;
+- Discord or Telegram identifiers that have not been approved for publication;
+- private personal planning, logistics or non-technical master-plan material;
+- claims that proposed concepts are complete or deployed.
 
-The website may include areas dedicated to:
+Private repositories can be described at a high level but are not linked. Public links
+must be checked before publication.
 
-### 🏠 Home
+## Design system
 
-An introduction to who I am and what I'm currently building.
+**assets/css/kk-tokens.css** is the unchanged token layer from KrazyKitty Design System
+v0.1.0. Site-specific composition lives in **assets/css/site.css**.
 
-### 👩‍💻 About
+The site layer adds the approved Naming Archive palette:
 
-My background, interests, technical journey, personality and goals.
+| Role | Value |
+|---|---|
+| Obsidian background | #090611 |
+| Electric violet | #8B5CF6 |
+| Neon amethyst | #A855F7 |
+| Soft lavender | #D8B4FE |
 
-### 🚀 Projects
+Cyan is used sparingly for technical metadata. Green is reserved for positively verified
+operating state and is always paired with a word or symbol.
 
-A structured view into active, experimental, completed and future projects.
+The Naming Archive and Development Universe artwork are visual inspiration only. They are
+not embedded as evidence or treated as implementation specifications.
 
-### 🧠 Research
+## Artwork
 
-AI, cybersecurity, operating systems, infrastructure and computer-science research.
+The current hero and social card form one coordinated visual system:
 
-### 🛡️ Cybersecurity
+- **hero-ecosystem-1280.webp** — responsive hero source for smaller viewports;
+- **hero-ecosystem-2172.webp** — large-screen hero source;
+- **og-ecosystem.jpg** — 1200 × 630 Open Graph card.
 
-Security projects, learning material, experiments and defensive-security work.
+The hero contains no required text; identity copy remains real HTML for accessibility,
+responsive layout and accurate rendering. The Open Graph card includes only the approved
+public identity.
 
-### 🧪 Lab
+## Preview locally
 
-Homelab infrastructure, Raspberry Pi projects, servers, networking and experiments.
+Windows PowerShell:
 
-### 📚 Knowledge
+    py -m http.server 8080
 
-Notes, resources, documentation and things I've learned.
+Linux or macOS:
 
-### 📝 Blog
+    python3 -m http.server 8080
 
-Development logs, project updates, technical write-ups and research notes.
+Then open:
 
-### 📊 Status
+    http://127.0.0.1:8080/
 
-Current projects, systems and development activity.
+Serving over HTTP is preferable to opening the file directly because it matches browser
+loading and Content Security Policy behaviour more closely.
 
----
+## Updating project cards
 
-# `08 // PHILOSOPHY`
+Each featured project is an article with:
 
-A lot of my projects are ambitious.
+- a lifecycle value in the data-status attribute;
+- a separate priority badge;
+- a public-safe summary;
+- technology tags;
+- a native details disclosure for current state and next gate.
 
-Some are experimental.
+When adding or changing a card:
 
-Some will change direction.
+1. Confirm the public project name.
+2. Verify the lifecycle and priority independently.
+3. Use the dated source evidence available at the time.
+4. Avoid exposing private paths, identifiers or operational details.
+5. Add a new filter only when it represents a genuinely distinct lifecycle.
+6. Re-run keyboard, mobile-width and no-JavaScript checks.
 
-Some may take years.
+## Accessibility and performance
 
-And some exist primarily because I want to discover whether I can build them.
-
-That's part of the point.
-
-I don't want my GitHub to only represent things I already know how to do.
-
-I want it to document the process of **becoming capable of doing things I currently cannot.**
-
-```text
-learn → experiment → fail → debug → understand → rebuild → improve
-```
-
-Every project teaches me something.
-
-Every failure becomes documentation.
-
-Every problem becomes another system to understand.
-
----
-
-# `09 // CURRENT MISSION`
-
-```text
-╭──────────────────────────────────────────────────────────╮
-│                                                          │
-│           KRAZYKITTY // DEVELOPMENT DIRECTIVE             │
-│                                                          │
-│  STATUS      : ACTIVE                                    │
-│  MODE        : LEARNING                                  │
-│  OBJECTIVE   : BUILD EVERYTHING I ONCE THOUGHT           │
-│                WAS TOO DIFFICULT FOR ME                   │
-│                                                          │
-│  SECURITY    : ENABLED                                   │
-│  CURIOSITY   : MAXIMUM                                   │
-│  PURPLE      : OBVIOUSLY                                 │
-│                                                          │
-╰──────────────────────────────────────────────────────────╯
-```
-
----
-
-# `10 // CONNECT`
-
-🌐 **Website:** [KrazyKitty.dev](https://krazykitty.dev)
-
-🐙 **GitHub:** [@krazykitty2503](https://github.com/krazykitty2503)
-
-My repositories contain a mixture of:
-
-- active development
-- experiments
-- research
-- learning projects
-- infrastructure
-- tools
-- interface customisation
-- prototypes
-- long-term plans
-
-Not everything should be interpreted as production-ready software.
-
-Some repositories deliberately document the journey from **idea → architecture → prototype → implementation → validation → release**.
-
----
-
-# `11 // REPOSITORY STATUS`
-
-KrazyKitty.dev itself will continue evolving alongside my skills, projects and development universe.
-
-```text
-SYSTEM://KRAZYKITTY.DEV
-
-TYPE............ Personal Developer Platform
-OWNER........... KrazyKitty
-STATUS.......... ACTIVE DEVELOPMENT
-ENVIRONMENT..... WEB
-IDENTITY........ ULTRAVIOLET
-SECURITY........ MONITORED
-NEKO_PROTOCOL... ACTIVE
-COFFEE_LEVEL.... UNKNOWN
-CURIOSITY....... UNBOUNDED
-```
-
----
-
-## 💜 Final Transmission
-
-Technology is where my curiosity, creativity and determination meet.
-
-**KrazyKitty.dev isn't intended to show a finished developer.**
-
-It's here to document someone continuously becoming a better one.
-
-```text
-kitty@krazykitty:~$ whoami
-
-> developer
-> student
-> cybersecurity analyst
-> system builder
-> researcher
-> creator
-> professional button-presser
-> occasional server breaker
-> permanent problem solver
-> cat enthusiast
-
-kitty@krazykitty:~$ echo $STATUS
-STILL_LEARNING // STILL_BUILDING // STILL_EVOLVING
-```
-
----
-
-<div align="center">
-
-### `KRAZYKITTY // BORN TO CUSTOMISE. BUILT TO STAND OUT.`
-
-💜 `SYSTEM ONLINE` 🐱
-
-**[ krazykitty.dev ]**
-
-</div>
+- Semantic landmarks and a single page-level heading.
+- Sequential heading structure.
+- Keyboard-visible focus rings and a skip link.
+- Mobile navigation with Escape dismissal and accurate expanded state.
+- Native details and summary disclosures.
+- Project-filter announcements through one polite status region.
+- A no-JavaScript fallback that keeps all content visible.
+- Motion disabled by default when reduced motion is requested.
+- No global near-zero animation-duration override.
+- Explicit image dimensions to reduce layout shift.
+- Responsive WebP hero sources discovered directly from HTML.
+- One high-priority hero image; below-the-fold avatar is lazy-loaded.
+- Self-hosted fonts and deferred, dependency-free JavaScript.
+- Forced-colours and increased-contrast adaptations.
+
+Automated testing cannot establish full WCAG conformance. Keyboard, screen-reader and
+real-device review remain human checks.
+
+## Deployment example
+
+Send the Content Security Policy as an HTTP header. This static site needs no external
+runtime origin.
+
+    krazykitty.dev {
+        root * /srv/krazykitty-ecosystem
+        file_server
+        encode zstd gzip
+
+        header {
+            Content-Security-Policy "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+            X-Content-Type-Options nosniff
+            Referrer-Policy strict-origin-when-cross-origin
+            Strict-Transport-Security "max-age=31536000"
+            Permissions-Policy "camera=(), microphone=(), geolocation=()"
+        }
+
+        @static path /assets/*
+        header @static Cache-Control "public, max-age=86400"
+    }
+
+    www.krazykitty.dev {
+        redir https://krazykitty.dev{uri} permanent
+    }
+
+Use versioned filenames or content hashes before switching static assets to immutable,
+year-long caching.
+
+## Verification checklist
+
+- HTML structure and local asset references
+- JavaScript syntax
+- Retired-name and private-content scan
+- Desktop and mobile screenshots
+- Horizontal-overflow check
+- Navigation, project filters, effects control and details disclosures
+- Keyboard-only walkthrough
+- Reduced-motion and no-JavaScript behaviour
+- Screen-reader and real-device review
+
+### Validation performed for this update
+
+- HTML validation: passed with `html-validate`.
+- JavaScript syntax: passed with `node --check`.
+- Local asset reference audit: passed with no missing files.
+- Retired-name and private-content scan: passed with no matches.
+- Generated hero and social-card artwork: visually inspected before optimisation.
+- Live desktop/mobile browser walkthrough: not completed because the isolated app browser
+  could not reach the temporary host preview server. Treat this, keyboard-only review,
+  screen-reader review and real-device review as release checks rather than completed tests.

@@ -1,0 +1,118 @@
+/* KrazyKitty Design System -- token layer
+ * v0.1.0
+ *
+ * Hand-generated from tokens/tokens.json. If the two disagree, the JSON wins.
+ *
+ * This file declares custom properties and nothing else. It selects no element
+ * and sets no visual property, so dropping it into any project is inert until
+ * something consumes a token.
+ *
+ * CSP: every KrazyKitty surface ships `style-src 'self'`, so there are no inline
+ * styles anywhere. Anything dynamic sets a custom property through the CSSOM
+ * (element.style.setProperty) or toggles a state class -- never a style attribute
+ * written into markup.
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* ---- Surfaces: darkest at the page, lifting toward interactive chrome ---- */
+  --kk-surface-0: #0a0610;   /* page            */
+  --kk-surface-1: #130d22;   /* panels, cards   */
+  --kk-surface-2: #1a1030;   /* insets, tracks  */
+  --kk-surface-3: #231640;   /* raised chrome   */
+
+  /* ---- Ink. All three clear 4.5:1 on surfaces 0-2.
+     --kk-ink-faint is 4.80:1 on --kk-surface-3: not for body text there. ---- */
+  --kk-ink: #e2d9f3;
+  --kk-ink-muted: #9d8fc0;
+  --kk-ink-faint: #8a7bb4;
+
+  /* ---- Brand ---- */
+  --kk-accent: #d946ef;
+  --kk-accent-dim: #9333ea;
+  --kk-accent-deep: #6b21a8;
+  --kk-magenta: #e879f9;
+  --kk-pink: #f0abfc;
+  --kk-violet: #c084fc;
+  /* Sparingly. Provenance and metadata accents only. */
+  --kk-cyan: #67e8f9;
+
+  /* ---- Status. Reserved: never a brand or category colour.
+     --kk-warn and --kk-danger are ~10.6 deltaE apart even in normal colour
+     vision, so neither is ever the only signal. Always pair with a word. ---- */
+  --kk-ok: #4ade80;
+  --kk-warn: #fb923c;
+  --kk-danger: #f87171;
+  --kk-info: #60a5fa;
+
+  /* ---- Lines ---- */
+  --kk-line-quiet: rgb(147 51 234 / .14);
+  --kk-line: rgb(147 51 234 / .25);
+  --kk-line-strong: rgb(192 132 252 / .4);
+
+  /* ---- Type ---- */
+  --kk-font-display: 'Orbitron', 'Rajdhani', 'Chakra Petch', ui-sans-serif, system-ui, 'Segoe UI', sans-serif;
+  --kk-font-mono: 'Share Tech Mono', 'JetBrains Mono', 'Cascadia Mono', Consolas, ui-monospace, monospace;
+  --kk-font-sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+
+  --kk-text-2xs: .625rem;
+  --kk-text-xs: .75rem;
+  --kk-text-sm: .8125rem;
+  --kk-text-base: .9375rem;
+  --kk-text-md: 1.125rem;
+  --kk-text-lg: 1.5rem;
+  --kk-text-xl: 2rem;
+
+  --kk-tracking-wide: .12em;
+  --kk-tracking-display: .08em;
+
+  /* ---- Space ---- */
+  --kk-space-1: .25rem;
+  --kk-space-2: .5rem;
+  --kk-space-3: .75rem;
+  --kk-space-4: 1rem;
+  --kk-space-5: 1.5rem;
+  --kk-space-6: 2rem;
+  --kk-space-7: 3rem;
+
+  /* ---- Shape and light ---- */
+  --kk-radius-sm: .25rem;
+  --kk-radius-md: .5rem;
+  --kk-radius-full: 99px;
+  --kk-glow-accent: 0 0 28px -14px rgb(217 70 239 / .55);
+  --kk-glow-inset: inset 0 1px 0 rgb(255 255 255 / .03);
+
+  /* ---- Ambient texture. Low opacity by design: data stays loudest. ---- */
+  --kk-grid-line: rgb(147 51 234 / .055);
+  --kk-grid-size: 52px;
+  --kk-nebula:
+    radial-gradient(ellipse 70% 45% at 88% -5%, rgb(107 33 168 / .17), transparent 60%),
+    radial-gradient(ellipse 55% 40% at 2% 8%, rgb(217 70 239 / .07), transparent 55%);
+
+  /* ---- Density. Override per surface (see patterns/kiosk-layouts.md) rather
+     than sprinkling magic numbers through component rules. ---- */
+  --kk-panel-pad: var(--kk-space-4);
+  --kk-tile-gap: var(--kk-space-3);
+}
+
+/* Under prefers-contrast: more, lift the lines and secondary ink and drop the
+   ambient texture entirely. Projects that adopt the token layer get this free. */
+@media (prefers-contrast: more) {
+  :root {
+    --kk-line: rgb(192 132 252 / .6);
+    --kk-line-quiet: rgb(192 132 252 / .35);
+    --kk-ink-muted: #c9bce8;
+    --kk-ink-faint: #b6a7dc;
+    --kk-grid-line: transparent;
+  }
+}
+
+/* Self-hosting the real faces is a drop-in upgrade. `font-src 'self'` already
+   permits them, so no CSP change and no third-party fetch -- which matters for
+   a LAN-only kiosk that must render correctly with no internet.
+
+@font-face { font-family: 'Orbitron';        src: url('./fonts/orbitron-variable.woff2') format('woff2-variations'); font-weight: 400 900; font-display: swap; }
+@font-face { font-family: 'Share Tech Mono'; src: url('./fonts/share-tech-mono.woff2')   format('woff2');            font-weight: 400;     font-display: swap; }
+@font-face { font-family: 'Inter';           src: url('./fonts/inter-variable.woff2')    format('woff2-variations'); font-weight: 100 900; font-display: swap; }
+*/
