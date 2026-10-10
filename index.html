@@ -1,2693 +1,691 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
-  <meta charset="UTF-8" />
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
-
-  <title>KrazyKitty.dev — KittyOS AI Architecture Research</title>
-
-  <meta
-    name="description"
-    content="KittyOS AI architecture research by KrazyKitty.dev — local LLMs, agentic AI, tool use, multimodal workflows and tiered model orchestration."
-  />
-
-  <meta name="theme-color" content="#0a0610" />
-
-  <meta property="og:title" content="KrazyKitty.dev — KittyOS" />
-  <meta
-    property="og:description"
-    content="AI architecture research, local LLMs and agentic systems by KrazyKitty."
-  />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://krazykitty.dev/" />
-
-  <style>
-    /* =========================================================
-       KRAZYKITTY.DEV
-       KITTYOS — AI ARCHITECTURE RESEARCH
-       ========================================================= */
-
-    :root {
-      --bg: #08050d;
-      --bg-soft: #0d0815;
-      --panel: #110b1a;
-      --panel-2: #160e21;
-
-      --text: #eee7f5;
-      --text-muted: #aaa0b5;
-      --text-dim: #756b80;
-
-      --accent: #d946ef;
-      --accent-soft: #a855f7;
-      --purple: #9333ea;
-      --blue: #6366f1;
-      --cyan: #22d3ee;
-
-      --border: rgba(217, 70, 239, 0.18);
-      --border-bright: rgba(217, 70, 239, 0.45);
-
-      --glow-sm:
-        0 0 8px rgba(217, 70, 239, 0.35);
-
-      --glow:
-        0 0 15px rgba(217, 70, 239, 0.35),
-        0 0 35px rgba(147, 51, 234, 0.12);
-
-      --font-mono:
-        "Cascadia Code",
-        "JetBrains Mono",
-        "SFMono-Regular",
-        Consolas,
-        monospace;
-
-      --font-display:
-        "Segoe UI",
-        system-ui,
-        sans-serif;
-
-      --max-width: 1180px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 80px;
-    }
-
-    body {
-      min-height: 100vh;
-      overflow-x: hidden;
-
-      background:
-        radial-gradient(
-          circle at 20% 10%,
-          rgba(147, 51, 234, 0.10),
-          transparent 28%
-        ),
-        radial-gradient(
-          circle at 80% 30%,
-          rgba(217, 70, 239, 0.07),
-          transparent 30%
-        ),
-        linear-gradient(
-          180deg,
-          #08050d 0%,
-          #0a0610 45%,
-          #08050d 100%
-        );
-
-      color: var(--text);
-      font-family: var(--font-display);
-      line-height: 1.7;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 20;
-
-      background:
-        linear-gradient(
-          rgba(255, 255, 255, 0.015) 1px,
-          transparent 1px
-        );
-
-      background-size: 100% 4px;
-      opacity: 0.25;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button,
-    a {
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    ::selection {
-      background: rgba(217, 70, 239, 0.35);
-      color: white;
-    }
-
-    .mono {
-      font-family: var(--font-mono);
-    }
-
-    .accent {
-      color: var(--accent);
-    }
-
-    /* =========================================================
-       PARTICLES
-       ========================================================= */
-
-    #particles {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.65;
-    }
-
-    /* =========================================================
-       NAVIGATION
-       ========================================================= */
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-
-      border-bottom: 1px solid var(--border);
-
-      background:
-        rgba(8, 5, 13, 0.86);
-
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
-
-    .topbar-inner {
-      width: min(
-        calc(100% - 32px),
-        var(--max-width)
-      );
-
-      min-height: 64px;
-      margin: auto;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    .brand {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      white-space: nowrap;
-    }
-
-    .brand:hover {
-      text-shadow: var(--glow-sm);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-
-      color: var(--text-dim);
-    }
-
-    .nav-links a {
-      transition:
-        color 0.2s ease,
-        text-shadow 0.2s ease;
-    }
-
-    .nav-links a:hover,
-    .nav-links a:focus-visible {
-      color: var(--accent);
-      text-shadow: var(--glow-sm);
-    }
-
-    /* =========================================================
-       MAIN
-       ========================================================= */
-
-    main {
-      position: relative;
-      z-index: 1;
-    }
-
-    .container {
-      width: min(
-        calc(100% - 32px),
-        var(--max-width)
-      );
-
-      margin-inline: auto;
-    }
-
-    section {
-      position: relative;
-      padding: 6rem 0;
-    }
-
-    /* =========================================================
-       HERO
-       ========================================================= */
-
-    .hero {
-      min-height: calc(100vh - 64px);
-
-      display: flex;
-      align-items: center;
-
-      padding-top: 5rem;
-      padding-bottom: 5rem;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns:
-        minmax(0, 1.4fr)
-        minmax(260px, 0.6fr);
-
-      align-items: center;
-      gap: 4rem;
-    }
-
-    .sys-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.65rem;
-
-      padding: 0.55rem 0.8rem;
-
-      border: 1px solid var(--border);
-      background: rgba(217, 70, 239, 0.045);
-
-      color: var(--text-muted);
-
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.08em;
-    }
-
-    .dot {
-      width: 7px;
-      height: 7px;
-
-      border-radius: 50%;
-      background: var(--accent);
-
-      box-shadow:
-        0 0 6px var(--accent),
-        0 0 12px rgba(217, 70, 239, 0.5);
-    }
-
-    .pulse {
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%,
-      100% {
-        opacity: 1;
-      }
-
-      50% {
-        opacity: 0.35;
-      }
-    }
-
-    .hero-brand {
-      margin-top: 1.8rem;
-      margin-bottom: 0.8rem;
-
-      color: var(--text-muted);
-
-      font-size: 0.8rem;
-      letter-spacing: 0.3em;
-    }
-
-    .hero-brand .accent {
-      text-shadow: var(--glow-sm);
-    }
-
-    .hero-title {
-      font-size: clamp(
-        4rem,
-        12vw,
-        8rem
-      );
-
-      line-height: 0.9;
-      letter-spacing: -0.06em;
-
-      font-weight: 800;
-
-      text-shadow:
-        0 0 25px rgba(217, 70, 239, 0.12);
-    }
-
-    .hero-title .accent {
-      text-shadow:
-        0 0 15px rgba(217, 70, 239, 0.45),
-        0 0 40px rgba(147, 51, 234, 0.2);
-    }
-
-    .hero-sub {
-      margin-top: 1.5rem;
-
-      color: var(--accent);
-
-      font-size: 0.72rem;
-      letter-spacing: 0.14em;
-    }
-
-    .hero-version {
-      margin-top: 0.5rem;
-
-      color: var(--text-dim);
-
-      font-size: 0.64rem;
-      letter-spacing: 0.1em;
-    }
-
-    .hero-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-
-      margin-top: 1.6rem;
-    }
-
-    .tag {
-      padding: 0.35rem 0.55rem;
-
-      border: 1px solid var(--border);
-
-      color: var(--text-muted);
-
-      background: rgba(255, 255, 255, 0.015);
-
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.05em;
-    }
-
-    .tag:hover {
-      border-color: var(--border-bright);
-      color: var(--accent);
-    }
-
-    .hero-desc {
-      max-width: 720px;
-
-      margin-top: 1.6rem;
-
-      color: var(--text-muted);
-      font-size: 1rem;
-    }
-
-    .hero-desc strong {
-      color: var(--text);
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-
-      margin-top: 1.75rem;
-    }
-
-    .hero-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-
-      padding: 0.7rem 1.1rem;
-
-      border: 1px solid var(--border-bright);
-      border-radius: 3px;
-
-      background: rgba(217, 70, 239, 0.05);
-
-      color: var(--accent);
-
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-
-      transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        transform 0.2s ease;
-    }
-
-    .hero-button:hover,
-    .hero-button:focus-visible {
-      background: rgba(217, 70, 239, 0.12);
-      border-color: var(--accent);
-      box-shadow: var(--glow-sm);
-      transform: translateY(-2px);
-    }
-
-    .hero-button.primary {
-      background: rgba(217, 70, 239, 0.15);
-      border-color: var(--accent);
-      color: #fff;
-    }
-
-    /* =========================================================
-       ABOUT
-       ========================================================= */
-
-    #about {
-      border-top: 1px solid var(--border);
-    }
-
-    .about-intro {
-      max-width: 820px;
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-      margin-top: 3rem;
-    }
-
-    .about-card {
-      padding: 1.4rem;
-      border: 1px solid var(--border);
-      background:
-        linear-gradient(
-          145deg,
-          rgba(22, 14, 33, 0.86),
-          rgba(11, 7, 16, 0.86)
-        );
-    }
-
-    .about-card.wide {
-      grid-column: 1 / -1;
-    }
-
-    .about-card h3 {
-      font-size: 1.15rem;
-    }
-
-    .about-card p {
-      margin-top: 0.75rem;
-      color: var(--text-muted);
-      font-size: 0.86rem;
-    }
-
-    .about-card strong {
-      color: var(--text);
-    }
-
-    .about-list {
-      display: grid;
-      gap: 0.4rem;
-      margin-top: 0.9rem;
-      padding-left: 1.2rem;
-      color: var(--text-muted);
-      font-size: 0.82rem;
-    }
-
-    .about-list li::marker {
-      color: var(--accent);
-    }
-
-    .tech-list {
-      margin-top: 0.9rem;
-      color: var(--cyan);
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      line-height: 1.9;
-    }
-
-    /* =========================================================
-       HERO TERMINAL
-       ========================================================= */
-
-    .terminal {
-      overflow: hidden;
-
-      border: 1px solid var(--border-bright);
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(22, 14, 33, 0.96),
-          rgba(9, 6, 14, 0.96)
-        );
-
-      box-shadow: var(--glow);
-    }
-
-    .terminal-header {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-
-      padding: 0.7rem 0.8rem;
-
-      border-bottom: 1px solid var(--border);
-
-      background: rgba(255, 255, 255, 0.025);
-    }
-
-    .terminal-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-
-      background: var(--text-dim);
-    }
-
-    .terminal-title {
-      margin-left: 0.45rem;
-
-      color: var(--text-dim);
-
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-    }
-
-    .terminal-body {
-      padding: 1.2rem;
-
-      color: #cfc3d8;
-
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-
-      line-height: 2;
-    }
-
-    .terminal-line {
-      display: block;
-    }
-
-    .terminal-prompt {
-      color: var(--accent);
-    }
-
-    .terminal-value {
-      color: var(--cyan);
-    }
-
-    .terminal-muted {
-      color: var(--text-dim);
-    }
-
-    /* =========================================================
-       SECTION HEADERS
-       ========================================================= */
-
-    .section-label {
-      margin-bottom: 0.6rem;
-
-      color: var(--accent);
-
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.16em;
-    }
-
-    .section-title {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-    }
-
-    .section-intro {
-      max-width: 760px;
-
-      margin-top: 1.2rem;
-
-      color: var(--text-muted);
-    }
-
-    /* =========================================================
-       PROJECT
-       ========================================================= */
-
-    #project {
-      border-top: 1px solid var(--border);
-    }
-
-    .project-layout {
-      display: grid;
-      grid-template-columns:
-        minmax(0, 1.2fr)
-        minmax(250px, 0.8fr);
-
-      gap: 3rem;
-    }
-
-    .project-copy p + p {
-      margin-top: 1.2rem;
-    }
-
-    .project-copy strong {
-      color: var(--text);
-    }
-
-    .callout {
-      padding: 1.3rem;
-
-      border: 1px solid var(--border);
-
-      background:
-        linear-gradient(
-          135deg,
-          rgba(217, 70, 239, 0.07),
-          rgba(147, 51, 234, 0.025)
-        );
-    }
-
-    .callout-title {
-      margin-bottom: 0.6rem;
-
-      color: var(--accent);
-
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-    }
-
-    .callout p {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    /* =========================================================
-       ARCHITECTURE
-       ========================================================= */
-
-    #architecture {
-      border-top: 1px solid var(--border);
-    }
-
-    .architecture-flow {
-      display: grid;
-
-      grid-template-columns:
-        repeat(5, minmax(0, 1fr));
-
-      gap: 0.75rem;
-
-      margin-top: 3rem;
-    }
-
-    .architecture-node {
-      position: relative;
-
-      padding: 1.3rem 1rem;
-
-      min-height: 150px;
-
-      border: 1px solid var(--border);
-
-      background:
-        rgba(17, 11, 26, 0.8);
-    }
-
-    .architecture-node::after {
-      content: "→";
-
-      position: absolute;
-      top: 50%;
-      right: -0.75rem;
-
-      transform: translateY(-50%);
-
-      color: var(--accent);
-
-      font-family: var(--font-mono);
-
-      z-index: 2;
-    }
-
-    .architecture-node:last-child::after {
-      display: none;
-    }
-
-    .node-number {
-      color: var(--accent);
-
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-    }
-
-    .node-title {
-      margin-top: 0.6rem;
-
-      font-weight: 700;
-      font-size: 1rem;
-    }
-
-    .node-text {
-      margin-top: 0.5rem;
-
-      color: var(--text-dim);
-
-      font-size: 0.75rem;
-      line-height: 1.6;
-    }
-
-    /* =========================================================
-       MODEL TIERS
-       ========================================================= */
-
-    .tier-grid {
-      display: grid;
-
-      grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-      gap: 1rem;
-
-      margin-top: 3rem;
-    }
-
-    .tier-card {
-      padding: 1.5rem;
-
-      border: 1px solid var(--border);
-
-      background:
-        linear-gradient(
-          180deg,
-          rgba(22, 14, 33, 0.85),
-          rgba(11, 7, 16, 0.85)
-        );
-
-      transition:
-        transform 0.2s ease,
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
-    }
-
-    .tier-card:hover {
-      transform: translateY(-4px);
-
-      border-color: var(--border-bright);
-
-      box-shadow: var(--glow-sm);
-    }
-
-    .tier-id {
-      color: var(--accent);
-
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.1em;
-    }
-
-    .tier-card h3 {
-      margin-top: 0.5rem;
-    }
-
-    .tier-card p {
-      margin-top: 0.7rem;
-
-      color: var(--text-muted);
-
-      font-size: 0.82rem;
-    }
-
-    .tier-list {
-      margin-top: 1rem;
-      padding-left: 1.1rem;
-
-      color: var(--text-dim);
-
-      font-size: 0.75rem;
-    }
-
-    .tier-list li + li {
-      margin-top: 0.35rem;
-    }
-
-    /* =========================================================
-       PRINCIPLES
-       ========================================================= */
-
-    .principles {
-      display: grid;
-
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-      gap: 1rem;
-
-      margin-top: 3rem;
-    }
-
-    .principle {
-      padding: 1.4rem;
-
-      border-left: 2px solid var(--accent);
-
-      background: rgba(217, 70, 239, 0.035);
-    }
-
-    .principle h3 {
-      font-size: 1rem;
-    }
-
-    .principle p {
-      margin-top: 0.45rem;
-
-      color: var(--text-muted);
-
-      font-size: 0.82rem;
-    }
-
-    /* =========================================================
-       RESEARCH MATRIX
-       ========================================================= */
-
-    .matrix-wrap {
-      margin-top: 3rem;
-
-      overflow-x: auto;
-
-      border: 1px solid var(--border);
-    }
-
-    .matrix {
-      width: 100%;
-
-      min-width: 680px;
-
-      border-collapse: collapse;
-
-      font-size: 0.78rem;
-    }
-
-    .matrix th,
-    .matrix td {
-      padding: 1rem;
-
-      text-align: left;
-
-      border-bottom: 1px solid var(--border);
-    }
-
-    .matrix th {
-      color: var(--accent);
-
-      background: rgba(217, 70, 239, 0.05);
-
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.08em;
-    }
-
-    .matrix td {
-      color: var(--text-muted);
-    }
-
-    .matrix tr:last-child td {
-      border-bottom: none;
-    }
-
-    .status {
-      display: inline-flex;
-
-      padding: 0.25rem 0.45rem;
-
-      border: 1px solid var(--border);
-
-      color: var(--accent);
-
-      font-family: var(--font-mono);
-      font-size: 0.58rem;
-    }
-
-    /* =========================================================
-       ROADMAP
-       ========================================================= */
-
-    .roadmap {
-      margin-top: 3rem;
-
-      display: grid;
-
-      gap: 0.8rem;
-    }
-
-    .roadmap-item {
-      display: grid;
-
-      grid-template-columns: 90px 1fr;
-
-      gap: 1rem;
-
-      padding: 1.1rem;
-
-      border: 1px solid var(--border);
-
-      background: rgba(255, 255, 255, 0.012);
-    }
-
-    .roadmap-stage {
-      color: var(--accent);
-
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-    }
-
-    .roadmap-item h3 {
-      font-size: 0.95rem;
-    }
-
-    .roadmap-item p {
-      margin-top: 0.35rem;
-
-      color: var(--text-muted);
-
-      font-size: 0.78rem;
-    }
-
-    /* =========================================================
-       FINAL RECOMMENDATION
-       ========================================================= */
-
-    #final {
-      border-top: 1px solid var(--border);
-    }
-
-    .final-callout {
-      max-width: 900px;
-
-      margin-top: 3rem;
-
-      padding: 2rem;
-
-      border: 1px solid var(--border-bright);
-
-      background:
-        radial-gradient(
-          circle at top right,
-          rgba(217, 70, 239, 0.09),
-          transparent 35%
-        ),
-        rgba(17, 11, 26, 0.85);
-
-      box-shadow: var(--glow);
-    }
-
-    .final-callout p {
-      margin-top: 0.8rem;
-
-      color: var(--text-muted);
-
-      font-size: 1rem;
-    }
-
-    .final-callout strong {
-      color: var(--text);
-    }
-
-    /* =========================================================
-       FOOTER
-       ========================================================= */
-
-    .site-footer {
-      position: relative;
-      z-index: 1;
-
-      border-top: 1px solid var(--border);
-
-      padding: 3rem 0;
-
-      background: rgba(5, 3, 8, 0.75);
-    }
-
-    .footer-inner {
-      width: min(
-        calc(100% - 32px),
-        var(--max-width)
-      );
-
-      margin: auto;
-
-      display: flex;
-      flex-direction: column;
-
-      align-items: center;
-
-      text-align: center;
-
-      gap: 0.7rem;
-    }
-
-    .footer-logo {
-      font-size: 0.8rem;
-      letter-spacing: 0.18em;
-    }
-
-    .footer-project {
-      color: var(--text-dim);
-
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-    }
-
-    .footer-tagline {
-      color: var(--text-dim);
-
-      font-size: 0.62rem;
-      letter-spacing: 0.08em;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-
-      justify-content: center;
-
-      gap: 1rem;
-
-      margin: 0.75rem 0;
-    }
-
-    .footer-links a {
-      color: var(--text-dim);
-
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-
-      transition: color 0.2s ease;
-    }
-
-    .footer-links a:hover,
-    .footer-links a:focus-visible {
-      color: var(--accent);
-    }
-
-    .footer-note {
-      color: #514958;
-
-      font-size: 0.58rem;
-      letter-spacing: 0.08em;
-    }
-
-    /* =========================================================
-       ACCESSIBILITY
-       ========================================================= */
-
-    :focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 4px;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-
-    /* =========================================================
-       RESPONSIVE
-       ========================================================= */
-
-    @media (max-width: 900px) {
-      .hero-grid,
-      .project-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        min-height: auto;
-      }
-
-      .architecture-flow {
-        grid-template-columns: 1fr;
-      }
-
-      .architecture-node {
-        min-height: auto;
-      }
-
-      .architecture-node::after {
-        content: "↓";
-
-        top: auto;
-        right: 50%;
-        bottom: -0.9rem;
-
-        transform: translateX(50%);
-      }
-
-      .architecture-node:last-child::after {
-        display: none;
-      }
-
-      .tier-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .about-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .about-card.wide {
-        grid-column: auto;
-      }
-    }
-
-    @media (max-width: 680px) {
-      .topbar-inner {
-        min-height: 58px;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      section {
-        padding: 4.5rem 0;
-      }
-
-      .hero {
-        padding-top: 3.5rem;
-      }
-
-      .hero-title {
-        font-size: clamp(3.5rem, 20vw, 6rem);
-      }
-
-      .hero-actions {
-        flex-direction: column;
-      }
-
-      .hero-button {
-        width: 100%;
-      }
-
-      .principles {
-        grid-template-columns: 1fr;
-      }
-
-      .roadmap-item {
-        grid-template-columns: 1fr;
-        gap: 0.35rem;
-      }
-
-      .final-callout {
-        padding: 1.3rem;
-      }
-    }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KITTYS//ECOSYSTEM — KrazyKitty's projects, home lab &amp; roadmap</title>
+  <meta name="description" content="KITTYS//ECOSYSTEM is the portfolio hub of KrazyKitty: a Debian home lab, Discord and Telegram tooling, a from-scratch language model, a Linux and cyber lab, and a planned Linux distro — every project with an honest, dated status label.">
+  <meta name="theme-color" content="#0a0610">
+  <meta name="color-scheme" content="dark">
+  <link rel="canonical" href="https://krazykitty.dev/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="KITTYS//ECOSYSTEM">
+  <meta property="og:title" content="KITTYS//ECOSYSTEM — KrazyKitty">
+  <meta property="og:description" content="Projects running, in development and planned: home lab, Discord and Telegram tooling, a from-scratch LLM, a Linux and cyber lab, a future Linux distro.">
+  <meta property="og:url" content="https://krazykitty.dev/">
+  <meta property="og:image" content="https://krazykitty.dev/assets/img/og-card.jpg">
+  <meta property="og:image:alt" content="KrazyKitty neko avatar at a violet neon desk with terminal windows">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="preload" href="assets/fonts/orbitron-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/fonts.css">
+  <link rel="stylesheet" href="assets/css/kk-tokens.css">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/main.js" defer></script>
 </head>
 
 <body>
-
+  <a class="kk-skip" href="#main">Skip to content</a>
   <canvas id="particles" aria-hidden="true"></canvas>
 
-  <!-- =======================================================
-       TOP NAVIGATION
-       ======================================================= -->
-
-  <header class="topbar">
-    <div class="topbar-inner">
-
-      <a
-        href="https://krazykitty.dev/"
-        class="brand"
-        aria-label="KrazyKitty.dev home"
-      >
-        KRAZY<span class="accent">KITTY</span>.DEV
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a class="brand" href="#top" aria-label="KITTYS//ECOSYSTEM — back to top">
+        <img src="assets/img/favicon.svg" alt="" width="28" height="28">
+        <span>KITTYS<span class="sl">//</span>ECOSYSTEM</span>
       </a>
-
-      <nav
-        class="nav-links"
-        aria-label="Main navigation"
-      >
-        <a href="#about">ABOUT</a>
-        <a href="#project">PROJECT</a>
-        <a href="#architecture">ARCHITECTURE</a>
-        <a href="#models">MODELS</a>
-        <a href="#research">RESEARCH</a>
+      <nav class="nav" aria-label="Sections">
+        <a href="#map">MAP</a>
+        <a href="#projects">PROJECTS</a>
         <a href="#roadmap">ROADMAP</a>
+        <a href="#learning">LEARNING</a>
+        <a href="#principles">PRINCIPLES</a>
+        <a href="#contact">CONTACT</a>
       </nav>
-
+      <button class="chip-btn fx-toggle" id="fx-toggle" type="button" aria-pressed="true">EFFECTS</button>
     </div>
   </header>
 
+  <main id="main" tabindex="-1">
 
-  <main>
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="top">
+      <div class="container hero-grid">
+        <div>
+          <p class="badge"><span class="badge-dot" aria-hidden="true"></span>KRAZYKITTY.DEV // PORTFOLIO HUB</p>
 
-    <!-- =====================================================
-         HERO
-         ===================================================== -->
+          <h1 class="hero-title">
+            <span>KITTYS<span class="sl">//</span></span>
+            <span class="grad">ECOSYSTEM</span>
+          </h1>
 
-    <section class="hero">
-      <div class="container">
+          <p class="hero-sub">CYBER • CODE • INFRASTRUCTURE • AI</p>
 
-        <div class="hero-grid">
+          <p class="hero-desc">
+            I'm <strong>Kitty</strong> (KrazyKitty): a developer and cybersecurity student who learns by
+            building real systems. This hub maps everything in my lab — what I <strong>run</strong>, what I'm
+            <strong>building</strong>, and what is still a <strong>plan</strong> — with a dated status label on every
+            project so nothing is dressed up as finished.
+          </p>
 
-          <div class="hero-left">
-
-            <div class="sys-badge">
-              <span class="dot pulse"></span>
-
-              <span class="mono">
-                KRAZYKITTY.DEV // PROJECT ONLINE
-              </span>
-            </div>
-
-            <div class="hero-brand mono">
-              KRAZY<span class="accent">KITTY</span>.DEV
-            </div>
-
-            <h1 class="hero-title">
-              KITTY<span class="accent">OS</span>
-            </h1>
-
-            <p class="hero-sub mono">
-              AI ARCHITECTURE // LOCAL AGENTS // MULTI-MODEL SYSTEMS
-            </p>
-
-            <p class="hero-version mono">
-              PROJECT STATUS: ACTIVE // RESEARCH BUILD
-            </p>
-
-            <div class="hero-tags">
-
-              <span class="tag">AGENTIC AI</span>
-              <span class="tag">LOCAL LLM</span>
-              <span class="tag">TOOL USE</span>
-              <span class="tag">MULTI-MODEL</span>
-              <span class="tag">CYBERSECURITY</span>
-              <span class="tag">OPEN SOURCE</span>
-
-            </div>
-
-            <p class="hero-desc">
-              KittyOS is an experimental AI command-center architecture
-              built by <strong>KrazyKitty</strong>. This research explores
-              local language models, agentic tool use, specialist model
-              routing, multimodal workflows and reliable AI systems running
-              on real consumer hardware.
-            </p>
-
-            <div class="hero-actions">
-
-              <a
-                href="#project"
-                class="hero-button primary"
-              >
-                INITIALIZE PROJECT
-              </a>
-
-              <a
-                href="https://krazykitty.dev/"
-                class="hero-button"
-              >
-                KRAZYKITTY.DEV
-              </a>
-
-            </div>
-
+          <div class="actions">
+            <a class="btn btn-primary" href="#projects">EXPLORE PROJECTS</a>
+            <a class="btn" href="#roadmap">SEE THE ROADMAP</a>
           </div>
+        </div>
 
+        <div class="hero-side">
+          <figure class="avatar">
+            <img src="assets/img/avatar.webp" width="640" height="640"
+                 alt="Anime neko avatar of KrazyKitty: a red-haired girl with cat ears and round glasses holding a handheld console, with a glowing pixel black cat in front of her.">
+            <figcaption>// KRAZYKITTY — neko × terminal</figcaption>
+          </figure>
 
-          <!-- TERMINAL -->
-
-          <div
-            class="terminal"
-            aria-label="KittyOS system terminal"
-          >
-
-            <div class="terminal-header">
-
-              <span class="terminal-dot"></span>
-              <span class="terminal-dot"></span>
-              <span class="terminal-dot"></span>
-
-              <span class="terminal-title">
-                kittyos://system-status
-              </span>
-
+          <div class="terminal" role="group" aria-label="Decorative boot sequence">
+            <div class="terminal-bar">
+              <span class="terminal-dot" aria-hidden="true"></span>
+              <span class="terminal-dot" aria-hidden="true"></span>
+              <span class="terminal-dot" aria-hidden="true"></span>
+              <span>ecosystem://decorative</span>
             </div>
-
             <div class="terminal-body">
-
-              <span class="terminal-line">
-                <span class="terminal-prompt">
-                  kitty@krazykitty
-                </span>:~$
-                ./kittyos --status
-              </span>
-
-              <span class="terminal-line">
-                kernel .........
-                <span class="terminal-value">
-                  online
-                </span>
-              </span>
-
-              <span class="terminal-line">
-                agent ..........
-                <span class="terminal-value">
-                  ready
-                </span>
-              </span>
-
-              <span class="terminal-line">
-                local_models ...
-                <span class="terminal-value">
-                  available
-                </span>
-              </span>
-
-              <span class="terminal-line">
-                tools ..........
-                <span class="terminal-value">
-                  enabled
-                </span>
-              </span>
-
-              <span class="terminal-line">
-                routing ........
-                <span class="terminal-value">
-                  adaptive
-                </span>
-              </span>
-
-              <span class="terminal-line">
-                multimodal .....
-                <span class="terminal-value">
-                  supported
-                </span>
-              </span>
-
-              <br />
-
-              <span class="terminal-line terminal-muted">
-                // small kernel
-              </span>
-
-              <span class="terminal-line terminal-muted">
-                // specialist models
-              </span>
-
-              <span class="terminal-line terminal-muted">
-                // reliable orchestration
-              </span>
-
-              <br />
-
-              <span class="terminal-line">
-                <span class="terminal-prompt">
-                  kitty@krazykitty
-                </span>:~$
-                <span class="terminal-value">_</span>
-              </span>
-
+              <span class="terminal-line" data-boot><span class="t-prompt">kitty@krazykitty</span>:~$ ./ecosystem --map</span>
+              <span class="terminal-line" data-boot>&gt; nodes: workstation, home-node, surfaces</span>
+              <span class="terminal-line" data-boot>&gt; status labels: <span class="t-val">dated, evidence-based</span></span>
+              <span class="terminal-line" data-boot>&gt; live telemetry: <span class="t-val">NOT MONITORED</span></span>
+              <span class="terminal-line" data-boot><span class="t-prompt">kitty@krazykitty</span>:~$ <span class="t-cursor" aria-hidden="true">_</span></span>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MAP ============ -->
+    <section class="section" id="map">
+      <div class="container">
+        <p class="eyebrow">// 00 ECOSYSTEM MAP</p>
+        <h2 class="section-title">How the pieces <em>fit together</em></h2>
+        <p class="section-intro">
+          A Windows workstation does the interactive and GPU-heavy work. An always-on Debian home server hosts,
+          monitors and automates. Together they feed the places people actually see my work.
+        </p>
+
+        <div class="map">
+          <div class="map-col">
+            <h3>WORKSTATION</h3>
+            <p class="map-sub">Windows 11 · Ryzen 5 · RX 9060 XT 16&nbsp;GB</p>
+            <ul class="map-list" role="list">
+              <li>KittyLM research &amp; training</li>
+              <li>KRAZY<span class="sl">//</span>CORE plugin development</li>
+              <li>KRAZY<span class="sl">//</span>NEXUS &amp; KITTY<span class="sl">//</span>RELAY development</li>
+              <li>Kittys AI (local agent)</li>
+            </ul>
+          </div>
+          <div class="map-col">
+            <h3>DEBIAN-KITTY</h3>
+            <p class="map-sub">Home server · always-on</p>
+            <ul class="map-list" role="list">
+              <li>Docker services, private DNS, reverse proxy</li>
+              <li>KERNEL<span class="sl">//</span>KITTY monitoring &amp; control plane</li>
+              <li>Discord bots &amp; the RELAY frontend</li>
+              <li>Future: builds, backups, storage, labs</li>
+            </ul>
+          </div>
+          <div class="map-col">
+            <h3>SURFACES</h3>
+            <p class="map-sub">Where it shows up</p>
+            <ul class="map-list" role="list">
+              <li>Discord &amp; Equicord</li>
+              <li>Telegram — KITTY<span class="sl">//</span>RELAY</li>
+              <li>krazykitty.dev (you are here)</li>
+              <li>Private dashboards &amp; consoles</li>
+            </ul>
+          </div>
+        </div>
+        <p class="map-caption">// conceptual map of how the pieces relate — not a live network topology</p>
+      </div>
+    </section>
+
+    <!-- ============ PROJECTS ============ -->
+    <section class="section" id="projects">
+      <div class="container">
+        <p class="eyebrow">// 01 PROJECT REGISTRY</p>
+        <h2 class="section-title">Running, building, <em>planned</em></h2>
+        <p class="section-intro">
+          Status follows evidence, not hope. Each card shows what is verified, what is a demo, and what is only a
+          design. Snapshot reviewed <time datetime="2026-10-09">9 October 2026</time>. Most of my repositories are
+          private for now; KittyLM is public.
+        </p>
+
+        <p class="scope-note">
+          STATUS SCOPE: a dated manual review of source repositories and read-only checks — not live telemetry.
+          Health, security, backups and alerts are NOT MONITORED by this page. “Running” is never a security audit.
+        </p>
+
+        <div class="legend" role="list" aria-label="Status legend">
+          <div class="legend-item" role="listitem"><span class="status status-running">RUNNING</span><br>Operating when last checked.</div>
+          <div class="legend-item" role="listitem"><span class="status status-building">BUILDING</span><br>Under active development; not production.</div>
+          <div class="legend-item" role="listitem"><span class="status status-planned">PLANNED</span><br>Designed or proposed. Nothing built yet.</div>
+          <div class="legend-item" role="listitem"><span class="status status-demo">DEMO DATA</span><br>Real interface, simulated values. Never presented as live.</div>
+        </div>
+
+        <div class="filters" role="group" aria-label="Filter projects by status">
+          <button class="chip-btn" type="button" data-filter="all" aria-pressed="true">ALL</button>
+          <button class="chip-btn" type="button" data-filter="running" aria-pressed="false">RUNNING</button>
+          <button class="chip-btn" type="button" data-filter="building" aria-pressed="false">BUILDING</button>
+          <button class="chip-btn" type="button" data-filter="planned" aria-pressed="false">PLANNED</button>
+        </div>
+        <p class="kk-visually-hidden" id="filter-status" role="status"></p>
+
+        <!-- ---------- 01 RUNNING ---------- -->
+        <div class="group" id="group-running">
+          <div class="group-head">
+            <span class="group-num">01 //</span>
+            <h3 class="group-title">RUNNING</h3>
+            <span class="group-note">Operating when last checked</span>
+          </div>
+          <div class="grid">
+
+            <article class="project" data-status="running" id="kernel-kitty">
+              <header class="project-head">
+                <span class="project-code">PRJ-01 // INFRA</span>
+                <span class="project-flags"><span class="status status-running">RUNNING</span></span>
+              </header>
+              <h4 class="project-name">KERNEL<span class="sl">//</span>KITTY</h4>
+              <p class="project-sum">The control, observability and automation plane for my <code>debian-kitty</code> home server: containerised services, private DNS, reverse proxying, secure remote access, monitoring and a read-only-first dashboard.</p>
+              <ul class="tags" role="list" aria-label="Technologies">
+                <li>Debian</li><li>Docker</li><li>FastAPI</li><li>Reverse proxy</li><li>Mesh VPN</li><li>Monitoring</li>
+              </ul>
+              <details class="project-more">
+                <summary>SYSTEM DETAILS</summary>
+                <dl>
+                  <dt>CURRENT STATE</dt>
+                  <dd>A Debian 13 node running a stack of Docker services, with a Milestone-2 dashboard process reporting host telemetry. Confirmed with read-only checks. That is not a full security or health audit.</dd>
+                  <dt>DESIGN RULES</dt>
+                  <dd>Read-only first. “Unknown” is never shown as healthy. A backup isn't “healthy” until a restore has been verified.</dd>
+                  <dt>NEXT GATE</dt>
+                  <dd>Verify the storage migration, add encrypted versioned backups with restore drills, and extend alerting.</dd>
+                </dl>
+              </details>
+              <p class="project-basis">BASIS: read-only checks · 2026-10-09 · SOURCE: private repo</p>
+            </article>
+
+            <article class="project" data-status="running" id="study-bot">
+              <header class="project-head">
+                <span class="project-code">PRJ-02 // DISCORD</span>
+                <span class="project-flags"><span class="status status-running">RUNNING</span></span>
+              </header>
+              <h4 class="project-name">Kitty's Study Bot</h4>
+              <p class="project-sum">A Discord bot, FastAPI management dashboard and orchestrator for a computer-science study server, with declarative, non-destructive server provisioning.</p>
+              <ul class="tags" role="list" aria-label="Technologies">
+                <li>Python</li><li>discord.py</li><li>FastAPI</li><li>OAuth2 / PKCE</li>
+              </ul>
+              <details class="project-more">
+                <summary>SYSTEM DETAILS</summary>
+                <dl>
+                  <dt>CURRENT STATE</dt>
+                  <dd>The repository documents five completed phases and the service process is observed running. Individual commands and server integrations have not been independently re-tested.</dd>
+                  <dt>NEXT GATE</dt>
+                  <dd>A canonical register of every bot: repository, runtime, scope, secrets location and health check.</dd>
+                </dl>
+              </details>
+              <p class="project-basis">BASIS: repository docs + process observed · 2026-10-09 · SOURCE: private repo</p>
+            </article>
 
           </div>
-
         </div>
 
-      </div>
-    </section>
+        <!-- ---------- 02 BUILDING ---------- -->
+        <div class="group" id="group-building">
+          <div class="group-head">
+            <span class="group-num">02 //</span>
+            <h3 class="group-title">BUILDING</h3>
+            <span class="group-note">Active development</span>
+          </div>
+          <div class="grid">
 
+            <article class="project" data-status="building" id="krazy-core">
+              <header class="project-head">
+                <span class="project-code">PRJ-03 // UI ENGINEERING</span>
+                <span class="project-flags"><span class="status status-building">BUILDING</span></span>
+              </header>
+              <h4 class="project-name">KRAZY<span class="sl">//</span>CORE</h4>
+              <p class="project-sum">A modular Equicord/Vencord customisation layer: a family of plugins for themes, palettes, gradients, glow, icons, wallpapers, animation and layout, coordinated by a Theme Studio.</p>
+              <ul class="tags" role="list" aria-label="Technologies">
+                <li>TypeScript</li><li>React</li><li>CSS architecture</li><li>Equicord</li>
+              </ul>
+              <details class="project-more">
+                <summary>SYSTEM DETAILS</summary>
+                <dl>
+                  <dt>CURRENT STATE</dt>
+                  <dd>Nine-plugin family in progress. Theme Studio applies changes through public adapters with snapshot, verify and rollback. Imported profiles are inert data, never executable.</dd>
+                  <dt>NEXT GATE</dt>
+                  <dd>Manual live acceptance testing inside the Discord client, then profiles, Message Designer and developer tools.</dd>
+                </dl>
+              </details>
+              <p class="project-basis">BASIS: repository state · 2026-10-09 · SOURCE: private repo</p>
+            </article>
 
-    <!-- =====================================================
-         ABOUT
-         ===================================================== -->
+            <article class="project" data-status="building" id="krazy-nexus">
+              <header class="project-head">
+                <span class="project-code">PRJ-04 // CONTROL PLANE</span>
+                <span class="project-flags"><span class="status status-building">BUILDING</span></span>
+              </header>
+              <h4 class="project-name">KRAZY<span class="sl">//</span>NEXUS</h4>
+              <p class="project-sum">A home-lab control plane and web console, currently private and pre-alpha. Guiding rule: NEXUS must be the safest thing running on the node, not the most powerful.</p>
+              <ul class="tags" role="list" aria-label="Technologies">
+                <li>FastAPI</li><li>React</li><li>TypeScript</li><li>PostgreSQL</li><li>Docker</li>
+              </ul>
+              <details class="project-more">
+                <summary>SYSTEM DETAILS</summary>
+                <dl>
+                  <dt>CURRENT STATE</dt>
+                  <dd>Pre-alpha. Not deployed and not controlling anything. Authentication, sessions, CSRF protection, capability-based authorisation, an append-only audit log and a read-only node API are merged.</dd>
+                  <dt>NEXT GATE</dt>
+                  <dd>Bounded node telemetry; MFA before any mutation; Docker access only through an allow-listed proxy, never a raw socket.</dd>
+                </dl>
+              </details>
+              <p class="project-basis">BASIS: repository state · 2026-10-09 · SOURCE: private repo</p>
+            </article>
 
-    <section id="about">
+            <article class="project" data-status="building" id="kittylm">
+              <header class="project-head">
+                <span class="project-code">PRJ-05 // AI RESEARCH</span>
+                <span class="project-flags"><span class="status status-building">BUILDING</span></span>
+              </header>
+              <h4 class="project-name">KittyLM</h4>
+              <p class="project-sum">A from-scratch language-model research platform: byte-level BPE tokenizer, LLaMA-style dense baseline, resumable training, evaluation and inference. Built to understand and measure the whole stack, not to rival production assistants.</p>
+              <ul class="tags" role="list" aria-label="Technologies">
+                <li>Python</li><li>PyTorch</li><li>ROCm</li><li>Tokenization</li>
+              </ul>
+              <details class="project-more">
+                <summary>SYSTEM DETAILS</summary>
+                <dl>
+                  <dt>CURRENT STATE</dt>
+                  <dd>Milestones A–D are implemented: tokenizer, model and attention benchmark, training with deterministic resume, and evaluation and generation (the README still lists D as in review). E–G have not started. Per the README, no model has been trained and no experiment results exist yet. The research configuration is around 17M parameters.</dd>
+                  <dt>NEXT GATE</dt>
+                  <dd>Milestone E (GPU smoke test), then the data pipeline and formal baseline experiments. Datasets and weights stay out of Git.</dd>
+                </dl>
+              </details>
+              <p class="project-basis">BASIS: public README + repo history · 2026-10-09 · SOURCE: <a href="https://github.com/krazykitty2503/kittylm" rel="noopener">public repo</a> (Apache-2.0)</p>
+            </article>
 
-      <div class="container">
+            <article class="project" data-status="building" id="kitty-relay">
+              <header class="project-head">
+                <span class="project-code">PRJ-06 // TELEGRAM</span>
+                <span class="project-flags">
+                  <span class="status status-building">BUILDING</span>
+                  <span class="status status-demo">DEMO DATA</span>
+                </span>
+              </header>
+              <h4 class="project-name">KITTY<span class="sl">//</span>RELAY</h4>
+              <p class="project-sum">A Telegram Mini App control centre for AI, agents, projects, security views and a small cyber arcade. The Phase 1 frontend is complete and runs on deterministic mock data; the backend does not exist yet.</p>
+              <ul class="tags" role="list" aria-label="Technologies">
+                <li>React 19</li><li>TypeScript</li><li>Vite</li><li>Tailwind CSS</li>
+              </ul>
+              <details class="project-more">
+                <summary>SYSTEM DETAILS</summary>
+                <dl>
+                  <dt>CURRENT STATE</dt>
+                  <dd>Everything the interface shows (AI replies, Docker controls, system metrics) is simulated in demo mode and labelled as such.</dd>
+                  <dt>NEXT GATE</dt>
+                  <dd>A FastAPI backend behind the existing typed API contract, Telegram <code>initData</code> validation and capability-based authorisation.</dd>
+                </dl>
+              </details>
+              <p class="project-basis">BASIS: repository state · 2026-10-09 · SOURCE: private repo</p>
+            </article>
 
-        <div class="section-label mono">
-          // OPERATOR PROFILE
-        </div>
+            <article class="project" data-status="building" id="kittys-ai">
+              <header class="project-head">
+                <span class="project-code">PRJ-07 // LOCAL AI</span>
+                <span class="project-flags"><span class="status status-building">BUILDING</span></span>
+              </header>
+              <h4 class="project-name">Kittys AI</h4>
+              <p class="project-sum">A local, privacy-preserving Discord AI agent that helps run a cybersecurity study server and doubles as a personal knowledge-management helper.</p>
+              <ul class="tags" role="list" aria-label="Technologies">
+                <li>OpenClaw Gateway</li><li>Ollama</li><li>discord.py</li><li>SQLite</li>
+              </ul>
+              <details class="project-more">
+                <summary>SYSTEM DETAILS</summary>
+                <dl>
+                  <dt>CURRENT STATE</dt>
+                  <dd>Runs on the Windows workstation with a local model bridge. A September config-corruption incident was resolved; a couple of low-urgency items remain open.</dd>
+                  <dt>DESIGN RULES</dt>
+                  <dd>Secrets live in the gateway's own store, never in <code>.env</code> files. Bulk Discord edits go through a rate-limit-aware queue.</dd>
+                </dl>
+              </details>
+              <p class="project-basis">BASIS: last reviewed · 2026-09-07 · SOURCE: private repo</p>
+            </article>
 
-        <h2 class="section-title">
-          About
-          <span class="accent">Me</span>.
-        </h2>
+            <article class="project" data-status="building" id="bot-fleet">
+              <header class="project-head">
+                <span class="project-code">PRJ-08 // DISCORD</span>
+                <span class="project-flags"><span class="status status-building">BUILDING</span></span>
+              </header>
+              <h4 class="project-name">Discord bot fleet</h4>
+              <p class="project-sum">A small fleet of Python Discord bots covering entertainment, music and general chaos: After Hours Bot, Jester Bot, Kitty's Music Bot, Angrier Jordan and MentalError404.</p>
+              <ul class="tags" role="list" aria-label="Technologies">
+                <li>Python</li><li>Discord API</li><li>Docker</li>
+              </ul>
+              <details class="project-more">
+                <summary>SYSTEM DETAILS</summary>
+                <dl>
+                  <dt>CURRENT STATE</dt>
+                  <dd>Angrier Jordan and MentalError404: processes observed running on the home server; functionality not re-tested. After Hours, Jester and Music bots: source repositories exist; runtime NOT CHECKED.</dd>
+                  <dt>NEXT GATE</dt>
+                  <dd>One canonical register mapping each bot to its repository, runtime, server scope, secrets location and health check.</dd>
+                </dl>
+              </details>
+              <p class="project-basis">BASIS: repository list + process check · 2026-10-09 · SOURCE: private repos</p>
+            </article>
 
-        <p class="section-intro about-intro">
-          Hi, I’m <strong>KrazyKitty</strong> — a Computer Science student,
-          cybersecurity enthusiast, Python developer, and independent
-          technology researcher based in Ireland.
-        </p>
+            <article class="project" data-status="building" id="design-system">
+              <header class="project-head">
+                <span class="project-code">PRJ-09 // DESIGN</span>
+                <span class="project-flags"><span class="status status-building">BUILDING</span></span>
+              </header>
+              <h4 class="project-name">KrazyKitty Design System</h4>
+              <p class="project-sum">A documentation-first specification for how every surface in the ecosystem looks and behaves: measured design tokens, status semantics, component contracts and an accessibility checklist, plus a small reference CSS you're meant to read.</p>
+              <ul class="tags" role="list" aria-label="Technologies">
+                <li>CSS</li><li>Design tokens</li><li>WCAG</li><li>Documentation</li>
+              </ul>
+              <details class="project-more">
+                <summary>SYSTEM DETAILS</summary>
+                <dl>
+                  <dt>CURRENT STATE</dt>
+                  <dd>Version 0.1.0. Every contrast claim is measured and recorded, not estimated. Adoption is opt-in and gradual; this hub uses its token layer.</dd>
+                  <dt>DESIGN RULES</dt>
+                  <dd>Technical first, personality second, readability always. A value that was never measured is shown as UNKNOWN, never as a green tick.</dd>
+                </dl>
+              </details>
+              <p class="project-basis">BASIS: repository docs · v0.1.0 · SOURCE: private repo</p>
+            </article>
 
-        <p class="section-intro about-intro">
-          I’m passionate about understanding how technology works from the
-          ground up, particularly across <strong>artificial intelligence,
-          cybersecurity, software engineering, automation, Linux, and
-          self-hosted infrastructure</strong>. I enjoy taking complex
-          technical ideas and turning them into practical systems,
-          experiments, and projects.
-        </p>
-
-        <div class="about-grid">
-
-          <article class="about-card">
-            <h3>Education</h3>
-
-            <p>
-              I’m currently studying <strong>Computer Science</strong>,
-              building a broad foundation in programming, software
-              engineering, computer systems, networking, algorithms, and
-              cybersecurity.
-            </p>
-
-            <p>
-              Alongside formal education, I place a strong emphasis on
-              <strong>self-directed learning and practical
-              experimentation</strong>. I regularly explore technologies
-              outside of the classroom by building projects, experimenting
-              with new tools, studying technical concepts, and learning
-              through hands-on problem solving.
-            </p>
-
-            <p>
-              My personal projects give me an opportunity to turn theoretical
-              knowledge into practical experience. Projects involving AI,
-              cybersecurity, Python, Linux, APIs, infrastructure, and
-              automation allow me to continuously expand my technical skills
-              while developing a deeper understanding of how different areas
-              of computing connect.
-            </p>
-
-            <p>
-              I see education as an ongoing process rather than something
-              that ends with a qualification. My aim is to continually
-              develop my knowledge as technology evolves.
-            </p>
-          </article>
-
-          <article class="about-card">
-            <h3>Building KittyOS</h3>
-
-            <p>
-              <strong>KittyOS</strong> is my vision for a personal AI
-              ecosystem designed around privacy, control, modularity, and
-              local-first computing.
-            </p>
-
-            <ul class="about-list">
-              <li>🤖 Local and private AI</li>
-              <li>🧠 LLMs and AI agents</li>
-              <li>🔧 Tool use and automation</li>
-              <li>🛡️ Cybersecurity and security boundaries</li>
-              <li>🐳 Docker and containerized workloads</li>
-              <li>🖥️ Self-hosted infrastructure</li>
-              <li>🌐 Web and Telegram-based interfaces</li>
-              <li>🔀 Multi-model and tiered AI orchestration</li>
-            </ul>
-
-            <p>
-              I’m interested in systems that can
-              <strong>reason about tasks, use tools responsibly, validate
-              their work, and provide evidence</strong> for what they have
-              done.
-            </p>
-          </article>
-
-          <article class="about-card">
-            <h3>KittyLM</h3>
-
-            <p>
-              I’m also developing <strong>KittyLM</strong>, an independent
-              research project exploring how language models can be designed
-              and trained from the ground up.
-            </p>
-
-            <p>
-              The project focuses on experimentation, reproducibility,
-              engineering discipline, and learning through implementation
-              rather than simply using existing models as black boxes.
-              My approach is deliberately experimental: build a solid
-              foundation, establish tests and evaluation methods, document
-              the results, and progressively explore more advanced
-              architectures.
-            </p>
-          </article>
-
-          <article class="about-card">
-            <h3>Cybersecurity</h3>
-
-            <p>
-              I’m particularly interested in defensive security, secure
-              system design, automation, authentication, infrastructure
-              security, and understanding how vulnerabilities emerge from
-              the interaction between software, networks, users, and systems.
-            </p>
-
-            <p>
-              I approach security from an engineering perspective:
-              <strong>understand the system, identify the trust boundaries,
-              reduce unnecessary risk, and verify the result.</strong>
-            </p>
-          </article>
-
-          <article class="about-card">
-            <h3>Development</h3>
-
-            <p>
-              Python is one of my primary programming languages, and I use
-              it for automation, AI experimentation, tooling, APIs, and
-              security-related projects.
-            </p>
-
-            <p class="tech-list">
-              Python · TypeScript · JavaScript · FastAPI · Docker · Git ·
-              GitHub · Linux · Windows · REST APIs · WebSockets · Local LLMs
-            </p>
-
-            <p>
-              I enjoy working across the entire stack, from writing code and
-              designing APIs to configuring infrastructure and building
-              user-facing interfaces.
-            </p>
-          </article>
-
-          <article class="about-card">
-            <h3>Career Goals</h3>
-
-            <p>
-              My long-term career goal is to build a career at the
-              intersection of <strong>cybersecurity, artificial intelligence,
-              and software engineering</strong>.
-            </p>
-
-            <p>
-              I want to become a highly capable technical professional who
-              can understand systems deeply, develop secure software,
-              investigate complex technical problems, and design reliable
-              infrastructure.
-            </p>
-
-            <p>
-              In particular, I’m interested in careers involving:
-            </p>
-
-            <ul class="about-list">
-              <li>🔐 <strong>Cybersecurity engineering and security research</strong></li>
-              <li>🤖 <strong>Artificial intelligence and AI engineering</strong></li>
-              <li>💻 <strong>Software and systems engineering</strong></li>
-              <li>🛡️ <strong>Defensive security and infrastructure security</strong></li>
-              <li>🧠 <strong>AI security and the security of autonomous systems</strong></li>
-              <li>🔬 <strong>Research and development</strong></li>
-            </ul>
-
-            <p>
-              Over time, I want to progress from learning and building
-              personal projects into working on
-              <strong>large-scale, real-world technical systems</strong>
-              where security, reliability, and intelligent automation are
-              important.
-            </p>
-
-            <p>
-              I also want to continue developing my academic background
-              alongside my professional career, potentially pursuing further
-              education or research in areas such as
-              <strong>cybersecurity, artificial intelligence, computer
-              science, or systems engineering</strong>.
-            </p>
-
-            <p>
-              Ultimately, my goal isn’t just to have a job in technology. I
-              want to become someone capable of
-              <strong>designing, building, securing, and understanding
-              complex technological systems</strong>.
-            </p>
-          </article>
-
-          <article class="about-card">
-            <h3>KrazyKitty.dev</h3>
-
-            <p>
-              <strong>KrazyKitty.dev</strong> is my personal technology space
-              and portfolio. It brings together my research, experiments,
-              projects, and ideas around AI, cybersecurity, software
-              engineering, and computing.
-            </p>
-
-            <p>
-              The goal isn’t simply to showcase finished projects. I also
-              want to document the <strong>process behind them</strong> —
-              what I tried, what worked, what failed, and what I learned.
-            </p>
-          </article>
-
-          <article class="about-card wide">
-            <h3>Looking Ahead</h3>
-
-            <p>
-              My long-term goal is to build a strong foundation across
-              <strong>computer science, cybersecurity, artificial
-              intelligence, and systems engineering</strong>, while
-              continuing to create independent projects that challenge me
-              technically.
-            </p>
-
-            <p>
-              I’m especially interested in the future of
-              <strong>local AI and personal computing</strong> — systems
-              where people have greater control over their models, data,
-              infrastructure, and automation.
-            </p>
-
-            <p>
-              For me, technology is most interesting when I can take an idea,
-              understand how it works, build it myself, and then keep
-              improving it.
-            </p>
-
-            <p>
-              <strong>Welcome to KrazyKitty.dev.</strong> 🐱💜
-            </p>
-          </article>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         PROJECT
-         ===================================================== -->
-
-    <section id="project">
-
-      <div class="container">
-
-        <div class="project-layout">
-
-          <div class="project-copy">
-
-            <div class="section-label mono">
-              // PROJECT
-            </div>
-
-            <h2 class="section-title">
-              Project:
-              <span class="accent">KittyOS</span>
-            </h2>
-
-            <p class="section-intro">
-              KittyOS is an experimental AI/developer command-center
-              architecture developed as part of the
-              <strong class="accent">
-                KrazyKitty.dev
-              </strong>
-              research lab.
-            </p>
-
-            <p>
-              The project explores how local language models can be
-              combined with agentic tools, specialist models and
-              cloud fallbacks.
-            </p>
-
-            <p>
-              Rather than relying on one enormous model, KittyOS
-              investigates a <strong>small always-on agent core</strong>
-              that can dynamically orchestrate specialist models when
-              a task requires additional capability.
-            </p>
+            <article class="project" data-status="building" id="this-site">
+              <header class="project-head">
+                <span class="project-code">PRJ-10 // WEB</span>
+                <span class="project-flags"><span class="status status-building">BUILDING</span></span>
+              </header>
+              <h4 class="project-name">KITTYS<span class="sl">//</span>ECOSYSTEM</h4>
+              <p class="project-sum">This portfolio hub: hand-written HTML, CSS and a little vanilla JavaScript. No framework, no trackers, self-hosted fonts, and a design that stays readable with effects turned off.</p>
+              <ul class="tags" role="list" aria-label="Technologies">
+                <li>HTML</li><li>CSS</li><li>JavaScript</li><li>WCAG-minded</li>
+              </ul>
+              <details class="project-more">
+                <summary>SYSTEM DETAILS</summary>
+                <dl>
+                  <dt>NEXT GATE</dt>
+                  <dd>A dedicated page per project, a research blog, and a versioned deploy pipeline.</dd>
+                </dl>
+              </details>
+              <p class="project-basis">BASIS: this page · 2026-10-09</p>
+            </article>
 
           </div>
+        </div>
 
+        <!-- ---------- 03 PLANNED ---------- -->
+        <div class="group" id="group-planned">
+          <div class="group-head">
+            <span class="group-num">03 //</span>
+            <h3 class="group-title">PLANNED</h3>
+            <span class="group-note">Designed or proposed. Not built.</span>
+          </div>
+          <div class="grid">
 
-          <aside class="callout">
+            <article class="project" data-status="planned" id="kittyos">
+              <header class="project-head">
+                <span class="project-code">PRJ-11 // LINUX DISTRO</span>
+                <span class="project-flags"><span class="status status-planned">PLANNED</span></span>
+              </header>
+              <h4 class="project-name">KittyOS</h4>
+              <p class="project-sum">A long-term custom Linux distribution: privacy-focused, security-conscious, local-first and deeply customisable. Inspirations: BlackArch for buildability, Purple Kali for cyber-lab study, Omarchy for customisation.</p>
+              <ul class="tags" role="list" aria-label="Technologies">
+                <li>Linux</li><li>Packaging</li><li>ISO builds</li><li>VM testing</li>
+              </ul>
+              <details class="project-more">
+                <summary>SYSTEM DETAILS</summary>
+                <dl>
+                  <dt>CURRENT STATE</dt>
+                  <dd>Documentation, design and artwork only. There is no bootable image, package repository, installer or release yet.</dd>
+                  <dt>BUILD PATH</dt>
+                  <dd>source → packages → automated tests → ISO → VM validation → release artifacts → optional network boot. The home server would host builds and VM tests.</dd>
+                </dl>
+              </details>
+              <p class="project-basis">BASIS: design documents · 2026-10-09</p>
+            </article>
 
-            <div class="callout-title mono">
-              // DESIGN PRINCIPLE
-            </div>
+            <article class="project" data-status="planned" id="kittyagent">
+              <header class="project-head">
+                <span class="project-code">PRJ-12 // AGENT RUNTIME</span>
+                <span class="project-flags"><span class="status status-planned">PLANNED</span></span>
+              </header>
+              <h4 class="project-name">KittyAgent</h4>
+              <p class="project-sum">The planned AI agent, execution runtime and backend that would sit behind KITTY<span class="sl">//</span>RELAY. Design intent: explicit authorisation, least privilege, verifiable tool results and human approval for consequential actions.</p>
+              <ul class="tags" role="list" aria-label="Technologies">
+                <li>Agents</li><li>Tool use</li><li>Local models</li><li>FastAPI</li>
+              </ul>
+              <details class="project-more">
+                <summary>SYSTEM DETAILS</summary>
+                <dl>
+                  <dt>CURRENT STATE</dt>
+                  <dd>Not started. Earlier AI-architecture research (a small agent kernel routing to specialist models) informs the design.</dd>
+                </dl>
+              </details>
+              <p class="project-basis">BASIS: design intent · 2026-10-09</p>
+            </article>
 
-            <p>
-              KittyOS should be a small, reliable agentic kernel with
-              specialist model services — not a giant monolithic brain.
-            </p>
+            <article class="project" data-status="planned" id="kernel-sentinel">
+              <header class="project-head">
+                <span class="project-code">PRJ-13 // MONITORING</span>
+                <span class="project-flags"><span class="status status-planned">PROPOSED</span></span>
+              </header>
+              <h4 class="project-name">KERNEL<span class="sl">//</span>SENTINEL</h4>
+              <p class="project-sum">A proposed Raspberry Pi 400 monitoring and operations console, so the main Debian server can run headless while a dedicated screen shows the lab at a glance.</p>
+              <ul class="tags" role="list" aria-label="Technologies">
+                <li>Raspberry Pi</li><li>Dashboards</li><li>Observability</li>
+              </ul>
+              <details class="project-more">
+                <summary>SYSTEM DETAILS</summary>
+                <dl>
+                  <dt>CURRENT STATE</dt>
+                  <dd>The hardware has arrived. The name is a proposal and the software is not built.</dd>
+                </dl>
+              </details>
+              <p class="project-basis">BASIS: proposal · 2026-10-09</p>
+            </article>
 
-          </aside>
-
+          </div>
         </div>
 
       </div>
-
     </section>
 
-
-    <!-- =====================================================
-         ARCHITECTURE
-         ===================================================== -->
-
-    <section id="architecture">
-
+    <!-- ============ ROADMAP ============ -->
+    <section class="section" id="roadmap">
       <div class="container">
-
-        <div class="section-label mono">
-          // SYSTEM ARCHITECTURE
-        </div>
-
-        <h2 class="section-title">
-          From request to
-          <span class="accent">result</span>.
-        </h2>
-
+        <p class="eyebrow">// 02 ROADMAP &amp; ASPIRATIONS</p>
+        <h2 class="section-title">Foundations first, <em>then the big ideas</em></h2>
         <p class="section-intro">
-          The proposed KittyOS architecture separates orchestration
-          from intelligence. A lightweight agent kernel determines
-          what needs to happen while specialist services handle
-          individual tasks.
+          Order matters: verify the foundations before stacking ambition on top of them. These are plans and
+          aspirations, not promises or dates.
         </p>
-
-
-        <div class="architecture-flow">
-
-          <article class="architecture-node">
-
-            <div class="node-number mono">
-              01 // INPUT
-            </div>
-
-            <h3 class="node-title">
-              User Request
-            </h3>
-
-            <p class="node-text">
-              Natural-language instructions, files, code,
-              images or other task inputs enter the system.
-            </p>
-
-          </article>
-
-
-          <article class="architecture-node">
-
-            <div class="node-number mono">
-              02 // KERNEL
-            </div>
-
-            <h3 class="node-title">
-              Agent Core
-            </h3>
-
-            <p class="node-text">
-              Interprets intent, maintains context and
-              determines which capabilities are required.
-            </p>
-
-          </article>
-
-
-          <article class="architecture-node">
-
-            <div class="node-number mono">
-              03 // ROUTER
-            </div>
-
-            <h3 class="node-title">
-              Model Router
-            </h3>
-
-            <p class="node-text">
-              Selects the appropriate local or remote
-              model based on capability and workload.
-            </p>
-
-          </article>
-
-
-          <article class="architecture-node">
-
-            <div class="node-number mono">
-              04 // TOOLS
-            </div>
-
-            <h3 class="node-title">
-              Tool Layer
-            </h3>
-
-            <p class="node-text">
-              Gives agents controlled access to code,
-              files, search, APIs and system services.
-            </p>
-
-          </article>
-
-
-          <article class="architecture-node">
-
-            <div class="node-number mono">
-              05 // OUTPUT
-            </div>
-
-            <h3 class="node-title">
-              Final Result
-            </h3>
-
-            <p class="node-text">
-              The system validates, formats and returns
-              a useful result to the user.
-            </p>
-
-          </article>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         MODEL TIERS
-         ===================================================== -->
-
-    <section id="models">
-
-      <div class="container">
-
-        <div class="section-label mono">
-          // MODEL ORCHESTRATION
-        </div>
-
-        <h2 class="section-title">
-          Specialist models,
-          <span class="accent">not one giant brain</span>.
-        </h2>
-
-        <p class="section-intro">
-          KittyOS can conceptually divide AI workloads into tiers.
-          The goal is to use the smallest capable model for each task
-          while retaining access to stronger systems when necessary.
-        </p>
-
-
-        <div class="tier-grid">
-
-          <article class="tier-card">
-
-            <div class="tier-id mono">
-              TIER 01 // FAST
-            </div>
-
-            <h3>
-              Local Utility Models
-            </h3>
-
-            <p>
-              Small models designed for fast, frequent operations
-              where latency matters more than maximum reasoning.
-            </p>
-
-            <ul class="tier-list">
-              <li>classification</li>
-              <li>simple transformations</li>
-              <li>short responses</li>
-              <li>routing decisions</li>
-            </ul>
-
-          </article>
-
-
-          <article class="tier-card">
-
-            <div class="tier-id mono">
-              TIER 02 // CORE
-            </div>
-
-            <h3>
-              General Agent Model
-            </h3>
-
-            <p>
-              The primary reasoning layer responsible for planning,
-              tool selection and multi-step task execution.
-            </p>
-
-            <ul class="tier-list">
-              <li>planning</li>
-              <li>coding assistance</li>
-              <li>tool orchestration</li>
-              <li>context management</li>
-            </ul>
-
-          </article>
-
-
-          <article class="tier-card">
-
-            <div class="tier-id mono">
-              TIER 03 // SPECIALIST
-            </div>
-
-            <h3>
-              Expert Services
-            </h3>
-
-            <p>
-              Larger or specialised models can be invoked only
-              when the task requires their additional capabilities.
-            </p>
-
-            <ul class="tier-list">
-              <li>deep reasoning</li>
-              <li>vision</li>
-              <li>large-context analysis</li>
-              <li>specialist workloads</li>
-            </ul>
-
-          </article>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         DESIGN PRINCIPLES
-         ===================================================== -->
-
-    <section>
-
-      <div class="container">
-
-        <div class="section-label mono">
-          // DESIGN PRINCIPLES
-        </div>
-
-        <h2 class="section-title">
-          Built for
-          <span class="accent">real hardware</span>.
-        </h2>
-
-        <p class="section-intro">
-          KittyOS is intended to be practical rather than purely
-          theoretical. The architecture should degrade gracefully,
-          remain understandable and operate within realistic hardware
-          constraints.
-        </p>
-
-
-        <div class="principles">
-
-          <article class="principle">
-
-            <h3>
-              Local-first
-            </h3>
-
-            <p>
-              Prefer local inference where it provides sufficient
-              capability, reducing latency and unnecessary external
-              dependencies.
-            </p>
-
-          </article>
-
-
-          <article class="principle">
-
-            <h3>
-              Modular
-            </h3>
-
-            <p>
-              Models and tools should be replaceable without requiring
-              the entire system architecture to change.
-            </p>
-
-          </article>
-
-
-          <article class="principle">
-
-            <h3>
-              Observable
-            </h3>
-
-            <p>
-              Agent decisions, model routing and tool activity should
-              be inspectable rather than hidden inside a monolithic
-              system.
-            </p>
-
-          </article>
-
-
-          <article class="principle">
-
-            <h3>
-              Fail-safe
-            </h3>
-
-            <p>
-              When a model, tool or external service fails, the core
-              system should fail gracefully instead of collapsing.
-            </p>
-
-          </article>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         RESEARCH MATRIX
-         ===================================================== -->
-
-    <section id="research">
-
-      <div class="container">
-
-        <div class="section-label mono">
-          // RESEARCH MATRIX
-        </div>
-
-        <h2 class="section-title">
-          Capability
-          <span class="accent">map</span>.
-        </h2>
-
-        <p class="section-intro">
-          A high-level view of the capabilities being explored by
-          the KittyOS architecture.
-        </p>
-
-
-        <div class="matrix-wrap">
-
-          <table class="matrix">
-
-            <thead>
-              <tr>
-                <th>CAPABILITY</th>
-                <th>ROLE</th>
-                <th>EXECUTION</th>
-                <th>STATUS</th>
-              </tr>
-            </thead>
-
-            <tbody>
-
-              <tr>
-                <td>Language</td>
-                <td>Reasoning & communication</td>
-                <td>Local / remote LLM</td>
-                <td>
-                  <span class="status">
-                    RESEARCH
-                  </span>
-                </td>
-              </tr>
-
-              <tr>
-                <td>Agentic Tools</td>
-                <td>External actions</td>
-                <td>Controlled tool layer</td>
-                <td>
-                  <span class="status">
-                    ACTIVE
-                  </span>
-                </td>
-              </tr>
-
-              <tr>
-                <td>Code</td>
-                <td>Development workflows</td>
-                <td>Sandbox / local environment</td>
-                <td>
-                  <span class="status">
-                    ACTIVE
-                  </span>
-                </td>
-              </tr>
-
-              <tr>
-                <td>Vision</td>
-                <td>Image understanding</td>
-                <td>Specialist model</td>
-                <td>
-                  <span class="status">
-                    RESEARCH
-                  </span>
-                </td>
-              </tr>
-
-              <tr>
-                <td>Routing</td>
-                <td>Model selection</td>
-                <td>Agent kernel</td>
-                <td>
-                  <span class="status">
-                    PLANNED
-                  </span>
-                </td>
-              </tr>
-
-              <tr>
-                <td>Cloud Fallback</td>
-                <td>Capability expansion</td>
-                <td>External API</td>
-                <td>
-                  <span class="status">
-                    OPTIONAL
-                  </span>
-                </td>
-              </tr>
-
-            </tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         ROADMAP
-         ===================================================== -->
-
-    <section id="roadmap">
-
-      <div class="container">
-
-        <div class="section-label mono">
-          // DEVELOPMENT ROADMAP
-        </div>
-
-        <h2 class="section-title">
-          Build the
-          <span class="accent">foundation first</span>.
-        </h2>
-
-        <p class="section-intro">
-          The project should progress from a reliable foundation
-          toward increasingly capable AI orchestration rather than
-          attempting to build everything simultaneously.
-        </p>
-
 
         <div class="roadmap">
-
-          <article class="roadmap-item">
-
-            <div class="roadmap-stage">
-              STEP 01
-            </div>
-
-            <div>
-              <h3>
-                Foundation
-              </h3>
-
-              <p>
-                Repository structure, development tooling, schemas,
-                tests, hooks and continuous integration.
-              </p>
-            </div>
-
+          <article class="phase">
+            <p class="phase-tag">NEAR TERM</p>
+            <h3>Finish &amp; verify</h3>
+            <ul role="list">
+              <li>Live acceptance testing for KRAZY//CORE Theme Studio</li>
+              <li>KittyLM Milestone E, then the data pipeline</li>
+              <li>KRAZY//NEXUS read-only node telemetry</li>
+              <li>Home-server storage migration and verified backups</li>
+              <li>A real backend for KITTY//RELAY behind its API contract</li>
+              <li>A page for each project card on this hub</li>
+            </ul>
           </article>
-
-
-          <article class="roadmap-item">
-
-            <div class="roadmap-stage">
-              STEP 02
-            </div>
-
-            <div>
-              <h3>
-                Agent Kernel
-              </h3>
-
-              <p>
-                Establish the core request lifecycle, context handling,
-                tool interfaces and model abstraction layer.
-              </p>
-            </div>
-
+          <article class="phase">
+            <p class="phase-tag">MEDIUM TERM</p>
+            <h3>Connect the ecosystem</h3>
+            <ul role="list">
+              <li>KRAZY//CORE profiles, Message Designer, Codeblock++ and developer tools</li>
+              <li>KittyOS package and build system with VM validation</li>
+              <li>KittyLM export and inference after reproducible baselines</li>
+              <li>Self-hosted Git, CI/CD, a private registry and artifact provenance</li>
+              <li>Central observability across nodes, bots and NEXUS</li>
+              <li>Defensive-security education content and more isolated lab environments</li>
+            </ul>
           </article>
-
-
-          <article class="roadmap-item">
-
-            <div class="roadmap-stage">
-              STEP 03
-            </div>
-
-            <div>
-              <h3>
-                Local Intelligence
-              </h3>
-
-              <p>
-                Introduce local language models and measure their
-                latency, memory requirements and practical capability.
-              </p>
-            </div>
-
+          <article class="phase">
+            <p class="phase-tag">LONG TERM</p>
+            <h3>Lab &amp; career vision</h3>
+            <ul role="list">
+              <li>Grow the home lab: NAS, Raspberry Pi and mini-PC nodes, managed networking, a high-VRAM AI node. k3s only if multi-node needs justify it</li>
+              <li>Work in security engineering, DevSecOps or infrastructure security</li>
+              <li>Contribute to open source and publish carefully governed AI research</li>
+              <li>Grow KittyOS into a full ecosystem; build privacy and education tools</li>
+              <li>Explore game development</li>
+            </ul>
           </article>
-
-
-          <article class="roadmap-item">
-
-            <div class="roadmap-stage">
-              STEP 04
-            </div>
-
-            <div>
-              <h3>
-                Specialist Routing
-              </h3>
-
-              <p>
-                Add model selection and specialist services so tasks
-                can be routed according to capability.
-              </p>
-            </div>
-
-          </article>
-
-
-          <article class="roadmap-item">
-
-            <div class="roadmap-stage">
-              STEP 05
-            </div>
-
-            <div>
-              <h3>
-                Multimodal Systems
-              </h3>
-
-              <p>
-                Expand the architecture with vision, documents,
-                structured data and additional input modalities.
-              </p>
-            </div>
-
-          </article>
-
-
-          <article class="roadmap-item">
-
-            <div class="roadmap-stage">
-              STEP 06
-            </div>
-
-            <div>
-              <h3>
-                Evaluation
-              </h3>
-
-              <p>
-                Benchmark reliability, latency, resource usage and
-                task success across different hardware configurations.
-              </p>
-            </div>
-
-          </article>
-
         </div>
-
+        <p class="fineprint">// aspirations are listed so I can be held to them, and so I keep learning toward them</p>
       </div>
-
     </section>
 
-
-    <!-- =====================================================
-         FINAL RECOMMENDATION
-         ===================================================== -->
-
-    <section id="final">
-
+    <!-- ============ LEARNING ============ -->
+    <section class="section" id="learning">
       <div class="container">
+        <p class="eyebrow">// 03 LEARNING, LAB &amp; STACK</p>
+        <h2 class="section-title">Studying while <em>building</em></h2>
 
-        <div class="section-label mono">
-          // FINAL RECOMMENDATION
+        <div class="two-col">
+          <div class="panel">
+            <h3>EDUCATION &amp; CERTIFICATION</h3>
+            <div class="rows">
+              <div class="row">
+                <p><strong>Google Cybersecurity Professional Certificate</strong>Security operations, network defence, incident response, Linux, SQL and Python for security automation.</p>
+                <span class="status status-building">IN PROGRESS · SINCE 20 SEP 2026</span>
+              </div>
+              <div class="row">
+                <p><strong>Computer Science degree (SETU, Level 8)</strong>Planned application via the CAO mature-applicant route. Not yet confirmed.</p>
+                <span class="status status-planned">PLANNED</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>TOOLBOX</h3>
+            <p class="stack-label">WORKING WITH</p>
+            <ul class="tags" role="list" aria-label="Working with">
+              <li>Python</li><li>TypeScript</li><li>JavaScript</li><li>React</li><li>FastAPI</li><li>PostgreSQL</li>
+              <li>SQL</li><li>Bash</li><li>PowerShell</li><li>Docker</li><li>Debian</li><li>Virtual machines</li><li>Git &amp; GitHub</li>
+            </ul>
+            <p class="stack-label">LEARNING</p>
+            <ul class="tags" role="list" aria-label="Learning">
+              <li>CI/CD</li><li>Kubernetes</li><li>C</li><li>BlackArch</li><li>Omarchy</li><li>Detection engineering</li><li>Threat modelling</li>
+            </ul>
+          </div>
         </div>
 
-        <h2 class="section-title">
-          Keep the kernel
-          <span class="accent">small</span>.
-        </h2>
-
-        <div class="callout final-callout">
-
-          <span class="mono accent">
-            // DESIGN PRINCIPLE
-          </span>
-
+        <div class="panel panel-wide" id="linux-lab">
+          <h3>LINUX &amp; CYBER LAB</h3>
           <p>
-            <strong>
-              KittyOS should be a small, reliable agentic kernel
-              with specialist model services — not a giant
-              monolithic brain.
-            </strong>
+            I've worked hands-on in virtual machines inside a simulated cyber lab, using ParrotOS and Purple Kali.
+            I'm now learning BlackArch and Omarchy and exploring other Linux distributions to understand how their
+            design choices differ. The lab is defensive and educational in purpose. These distros are also the
+            reference points for <a href="#kittyos">KittyOS</a>.
           </p>
-
-          <p>
-            That architecture is more modular, easier to debug,
-            easier to upgrade and more likely to remain practical
-            on real local hardware.
-          </p>
-
+          <div class="distros">
+            <article class="distro">
+              <h4>ParrotOS</h4>
+              <span class="status status-hands-on">HANDS-ON</span>
+              <p>Debian-based, security-focused distribution. Used in VMs in the simulated cyber lab.</p>
+            </article>
+            <article class="distro">
+              <h4>Purple Kali</h4>
+              <span class="status status-hands-on">HANDS-ON</span>
+              <p>Kali's defensive-leaning edition (Kali Purple). Used in VMs in the simulated cyber lab.</p>
+            </article>
+            <article class="distro">
+              <h4>BlackArch</h4>
+              <span class="status status-learning">LEARNING</span>
+              <p>Arch-based distribution built around a very large repository of security tools.</p>
+            </article>
+            <article class="distro">
+              <h4>Omarchy</h4>
+              <span class="status status-learning">LEARNING</span>
+              <p>An opinionated Arch-based desktop setup I'm studying for its approach to customisation.</p>
+            </article>
+            <article class="distro">
+              <h4>Other distros</h4>
+              <span class="status status-exploring">EXPLORING</span>
+              <p>Comparing how different distributions handle packaging, defaults and tooling.</p>
+            </article>
+          </div>
         </div>
-
       </div>
+    </section>
 
+    <!-- ============ PRINCIPLES ============ -->
+    <section class="section" id="principles">
+      <div class="container">
+        <p class="eyebrow">// 04 PRINCIPLES</p>
+        <h2 class="section-title">How I <em>build</em></h2>
+
+        <div class="principles">
+          <article class="principle">
+            <h3>Local-first &amp; private</h3>
+            <p>Prefer local inference and self-hosting where practical. Sensitive workloads stay on hardware I control.</p>
+          </article>
+          <article class="principle">
+            <h3>Least-privilege agents</h3>
+            <p>AI tools get explicit, scoped permissions. Consequential actions need a human to approve them.</p>
+          </article>
+          <article class="principle">
+            <h3>Honest telemetry</h3>
+            <p>Unknown is not healthy. Demos are labelled as demos. A status I can't verify isn't shown as good news.</p>
+          </article>
+          <article class="principle">
+            <h3>Build, measure, understand</h3>
+            <p>Learn by building real systems, record the evidence, and only then claim it works.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section" id="contact">
+      <div class="container">
+        <p class="eyebrow">// 05 CONTACT</p>
+        <h2 class="section-title">Say <em>hello</em></h2>
+        <p class="section-intro">My GitHub profile is the best place to find me for now. Most repositories are private while they mature; more ways to get in touch will be added here as the hub grows.</p>
+
+        <div class="contact">
+          <a class="btn btn-primary" href="https://github.com/krazykitty2503" rel="me noopener">GITHUB // KRAZYKITTY2503</a>
+        </div>
+
+        <figure class="banner">
+          <img src="assets/img/banner-discord.webp" width="1600" height="640" loading="lazy"
+               alt="Pixel-art black cat with glowing cyan eyes sitting on a floating crystal island labelled CATOS, in a violet sky, with retro 404 “paw not found” windows.">
+          <figcaption>// the Discord banner: a lost-but-adorable CATOS 404</figcaption>
+        </figure>
+      </div>
     </section>
 
   </main>
 
-
-  <!-- =======================================================
-       FOOTER
-       ======================================================= -->
-
+  <!-- ============ FOOTER ============ -->
   <footer class="site-footer">
-
-    <div class="footer-inner">
-
-      <div class="footer-logo mono">
-        KRAZY<span class="accent">KITTY</span>.DEV
-      </div>
-
-      <div class="footer-project mono">
-        PROJECT //
-        <span class="accent">
-          KITTYOS
-        </span>
-      </div>
-
-      <div class="footer-tagline mono">
-        AI • CODE • CYBERSECURITY • OSINT • CREATIVE
-      </div>
-
-      <div class="footer-links">
-
-        <a href="https://krazykitty.dev/">
-          HOME
-        </a>
-
-        <a href="#about">
-          ABOUT
-        </a>
-
-        <a href="#project">
-          PROJECT
-        </a>
-
-        <a href="#architecture">
-          ARCHITECTURE
-        </a>
-
-        <a href="#research">
-          RESEARCH
-        </a>
-
-        <a href="#final">
-          RECOMMENDATION
-        </a>
-
-      </div>
-
-      <div class="footer-note mono">
-        // RESEARCH BUILD · KRAZYKITTY.DEV · 2026
-      </div>
-
+    <div class="container site-footer-inner">
+      <p class="footer-brand">KITTYS<span class="sl">//</span>ECOSYSTEM</p>
+      <p class="footer-line">KRAZYKITTY // Born to customize. Built to stand out.</p>
+      <p class="footer-line">kitty@krazykitty:~$ <code>initialize --theme=neon-violet --mode=cyberpunk --identity=neko</code></p>
+      <p class="footer-line">Statuses reviewed <time datetime="2026-10-09">2026-10-09</time> · static page · no tracking · tokens: KrazyKitty Design System v0.1.0</p>
     </div>
-
   </footer>
-
-
-  <!-- =======================================================
-       JAVASCRIPT
-       ======================================================= -->
-
-  <script>
-    /* =========================================================
-       KRAZYKITTY.DEV PARTICLE SYSTEM
-       ========================================================= */
-
-    (() => {
-      const canvas = document.getElementById("particles");
-
-      if (!canvas) return;
-
-      const ctx = canvas.getContext("2d");
-
-      if (!ctx) return;
-
-      let width = 0;
-      let height = 0;
-      let dpr = 1;
-
-      let particles = [];
-
-      const reduceMotion =
-        window.matchMedia(
-          "(prefers-reduced-motion: reduce)"
-        ).matches;
-
-
-      function resize() {
-        dpr = Math.min(
-          window.devicePixelRatio || 1,
-          2
-        );
-
-        width = window.innerWidth;
-        height = window.innerHeight;
-
-        canvas.width = width * dpr;
-        canvas.height = height * dpr;
-
-        canvas.style.width = `${width}px`;
-        canvas.style.height = `${height}px`;
-
-        ctx.setTransform(
-          dpr,
-          0,
-          0,
-          dpr,
-          0,
-          0
-        );
-      }
-
-
-      class Particle {
-
-        constructor() {
-          this.reset();
-        }
-
-        reset() {
-          this.x =
-            Math.random() * width;
-
-          this.y =
-            Math.random() * height;
-
-          this.size =
-            Math.random() * 1.4 + 0.25;
-
-          this.speedX =
-            (Math.random() - 0.5) * 0.25;
-
-          this.speedY =
-            (Math.random() - 0.5) * 0.25;
-
-          this.opacity =
-            Math.random() * 0.45 + 0.08;
-
-          this.color =
-            Math.random() > 0.5
-              ? "#d946ef"
-              : "#9333ea";
-        }
-
-        update() {
-          this.x += this.speedX;
-          this.y += this.speedY;
-
-          if (this.x < 0) {
-            this.x = width;
-          }
-
-          if (this.x > width) {
-            this.x = 0;
-          }
-
-          if (this.y < 0) {
-            this.y = height;
-          }
-
-          if (this.y > height) {
-            this.y = 0;
-          }
-        }
-
-        draw() {
-          ctx.save();
-
-          ctx.globalAlpha =
-            this.opacity;
-
-          ctx.fillStyle =
-            this.color;
-
-          ctx.shadowBlur = 5;
-
-          ctx.shadowColor =
-            this.color;
-
-          ctx.beginPath();
-
-          ctx.arc(
-            this.x,
-            this.y,
-            this.size,
-            0,
-            Math.PI * 2
-          );
-
-          ctx.fill();
-
-          ctx.restore();
-        }
-
-      }
-
-
-      function init() {
-        resize();
-
-        particles = [];
-
-        const count = Math.min(
-          Math.floor(
-            (width * height) / 14000
-          ),
-          120
-        );
-
-        for (let i = 0; i < count; i++) {
-          particles.push(
-            new Particle()
-          );
-        }
-      }
-
-
-      function animate() {
-        ctx.clearRect(
-          0,
-          0,
-          width,
-          height
-        );
-
-        for (const particle of particles) {
-          particle.update();
-          particle.draw();
-        }
-
-        if (!reduceMotion) {
-          requestAnimationFrame(
-            animate
-          );
-        }
-      }
-
-
-      window.addEventListener(
-        "resize",
-        () => {
-          init();
-
-          if (reduceMotion) {
-            animate();
-          }
-        },
-        { passive: true }
-      );
-
-
-      init();
-      animate();
-
-    })();
-
-
-    /* =========================================================
-       SIMPLE TERMINAL CURSOR EFFECT
-       ========================================================= */
-
-    (() => {
-      const cursor =
-        document.querySelector(
-          ".terminal-value:last-child"
-        );
-
-      if (!cursor) return;
-
-      if (
-        window.matchMedia(
-          "(prefers-reduced-motion: reduce)"
-        ).matches
-      ) {
-        return;
-      }
-
-      setInterval(() => {
-        cursor.style.opacity =
-          cursor.style.opacity === "0"
-            ? "1"
-            : "0";
-      }, 650);
-
-    })();
-  </script>
-
 </body>
 </html>
